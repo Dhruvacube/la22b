@@ -1,1 +1,4 @@
 .vscode
+.env
+gdrive_config.json
+*.pyc
