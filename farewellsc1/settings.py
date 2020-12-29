@@ -17,14 +17,14 @@ INSTALLED_APPS = [
     'titles.apps.TitlesConfig',
 
     'django.contrib.admin',
+    'django.contrib.postgres',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    "post_office",
-    'gdstorage'
+    'picklefield',
 ]
 
 MIDDLEWARE = [
@@ -72,6 +72,9 @@ if os.path.isfile(dotenv_file):
     GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = BASE_DIR /'gdrive_config.json'
 
     DATABASES = {'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))}
+
+    MEDIA_ROOT = BASE_DIR / 'media'
+    if not os.path.exists(MEDIA_ROOT): os.mkdir(MEDIA_ROOT)
 
 else:
     PRODUCTION_SERVER = True
@@ -121,6 +124,8 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
+
+SESSION_COOKIE_AGE = 86400
 
 #oververiding a message tag
 MESSAGE_TAGS = {

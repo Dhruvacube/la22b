@@ -2,3 +2,4 @@
 .env
 gdrive_config.json
 *.pyc
+media
