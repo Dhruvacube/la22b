@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}{% load static %} {% block body %}
+<link href="{% static 'css/student.css' %}" rel="stylesheet">
+<link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+<div class="row row-cols-1 row-cols-md-3 g-4" style="margin: 10px;">
+    {% for i in student_model %}
+    <div class="col">
+        <div class="card" style="width: 70%; border-radius: 10px;">
+            <img class="card-img-top" style="border-radius: 10px; width: 100%; height: 100%;" src="{{media}}{{i.profile_pic}}">
+            <div class="card-body">
+                <h5 class="card-title">{{i.name}} · {% ifequal i.class_stu 'sc1' %}SC-1{% endifequal %} {% ifequal i.class_stu 'sc2' %}SC-2{% endifequal %} {% ifequal i.class_stu 'sc3' %}SC-3{% endifequal %} {% ifequal i.class_stu 'com' %}COMMERCE{% endifequal %}{% ifequal i.class_stu 'arts' %}ARTS{% endifequal %}</h5>
+                <p class="card-text"><a class="nav-link btn btn-outline-primary" href="{% url 'Student Profile' slug=i.slug %}">Visit Profile</a></p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="container">
+
+</div>
+<!-- ===Ends== -->
+{% endblock %}

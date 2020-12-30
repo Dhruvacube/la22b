@@ -1,6 +1,5 @@
 {% extends 'layout.html' %} {% load static %}{% load extras %} {% block body %}
 <link href="{% static 'css/student.css' %}" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
 <div class="container emp-profile">
 
@@ -48,13 +47,13 @@
                 </li>
                 {% if not data_404 %}
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Vote</a>
+                    <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Top Nickname(s)</a>
                 </li>
                 {% endif %}
             </ul>
 
             <div class="tab-content  profile-tab" id="myTabContent" style="margin-top: 10px;">
-                <div style="margin: 30px, 30px, 30px, 5px;" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div style="margin: 30px, 30px, 30px, 5px; height: 100px;" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="row">
                         <div class="col">
 
@@ -64,9 +63,10 @@
                                     <input class="form-control" name="nickname" list="datalistOptions" placeholder="Type the nickname you want to give">
                                     <datalist id="datalistOptions">
                                         {% for i in data %}
-                                        <option value="{{i}}">
+                                        <option value="{{i|get_val:0}}">
                                         {% endfor %}
                                     </datalist>
+                                    <small><strong>Please do not enter any special character!</strong></small>
                                 </div>
                                 <div class="col-auto">
                                     <button type="submit" class="btn btn-primary mb-3">Submit </button>
@@ -78,7 +78,7 @@
                 </div>
 
                 {% if not data_404 %}
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane fade" style="overflow-y: scroll; overflow-x:hidden; height: 200px;" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="row">
                         <div class="col-md-6">
                             <label><u>Nickname</u></label>
