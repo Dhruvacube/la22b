@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'farewellsc1.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'la22b.settings')
 
 application = get_asgi_application()
