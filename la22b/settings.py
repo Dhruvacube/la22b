@@ -35,7 +35,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'farewellsc1.urls'
+ROOT_URLCONF = 'la22b.urls'
 
 TEMPLATES = [
     {
@@ -53,7 +53,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'farewellsc1.wsgi.application'
+WSGI_APPLICATION = 'la22b.wsgi.application'
 
 
 # Database
