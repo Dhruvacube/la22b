@@ -7,6 +7,8 @@ from main import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.home, name="Cover Page"),
+
     path('results/',include('results.urls')),
     path('student/',include('student.urls')),
     path('titles/',include('titles.urls')),

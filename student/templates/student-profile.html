@@ -59,7 +59,7 @@
 
                             <form class="row g-2" method="post" action="{% url 'Add Nickname' slug=slug %}">{% csrf_token %}
                                 <div class="col-8">
-                                    <label for="inputPassword2" class="visually-hidden">Type the nickname you want to give</label>
+                                    <label for="nickname" class="visually-hidden">Type the nickname you want to give</label>
                                     <input class="form-control" name="nickname" list="datalistOptions" placeholder="Type the nickname you want to give">
                                     <datalist id="datalistOptions">
                                         {% for i in data %}

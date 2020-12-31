@@ -1,5 +1,8 @@
 body {
-    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    background-image: url('../img/student_back.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .emp-profile {

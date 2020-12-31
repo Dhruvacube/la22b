@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}{% load static %}{% load humanize %}{% block body %}
+<link href="{% static 'css/student.css' %}" rel="stylesheet">
+
+<div class="row row-cols-1 row-cols-md-3 g-4" style="margin: 10px;">
+    {% for i in title_model %}
+    <div class="col">
+        <div class="card border-primary" style="width: 18rem;">
+            <div class="card-header border-primary">
+                <h4><img src="{% static 'img/logo.png' %}" alt="LA22B" width="30" height="30"> {{i.title_name}}</h4>
+            </div>
+            <div class="card-body">
+                <p class="card-title"><strong>Total votes: {{i.total_vote|intcomma}} votes</strong></p>
+                <p class="card-text">{{i.desc}}</p>
+                <p class="card-text"><a class="nav-link btn btn-outline-primary" href="{% url 'Vote Title' slug=i.slug %}">Vote</a></p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="container">
+
+</div>
+<!-- ===Ends== -->
+{% endblock %}

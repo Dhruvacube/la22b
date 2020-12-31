@@ -67,6 +67,7 @@ def student(request, slug):
             'titles_404': False if titles.count() else True,
             'data_404': False if len(ast.literal_eval(student.data) if student.data else []) else True,
             'total_students':total_students,
+            'profile_stu': True,
         }
     )
 
