@@ -61,9 +61,9 @@ class Student(models.Model):
     def view_profile_picture(self):
         height = width = '40%'
         if self.profile_pic:
-            return mark_safe(f'<img src="{settings.MEDIA_URL}{self.profile_pic}" width="{width}" height={height}" />')
+            return mark_safe(f'<img src="{settings.MEDIA_URL}{self.profile_pic}" width="{width}" height={height}" style="border-radius: 10px;" />')
         else:
-            return mark_safe(f'<img src="{settings.STATIC_URL}img/user_unknown.jpg" width="{width}" height="{height}" />')
+            return mark_safe(f'<img src="{settings.STATIC_URL}img/user_unknown.jpg" width="{width}" height="{height}" style="border-radius: 10px;"  />')
     
     def save(self, *args, **kwargs):
         import string

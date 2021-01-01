@@ -1,7 +1,7 @@
 {% extends 'layout.html' %} {% load static %}{% block body %}
 <link href="{% static 'css/student.css' %}" rel="stylesheet">
 
-<div class="container emp-profile" style="height: 450px;">
+<div class="container emp-profile" style="height: 450px; min-height:0;">
 
     {% for message in messages %}
     <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -25,17 +25,19 @@
             <div class="tab-content  profile-tab">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="row">
-                        <div class="col">
+                        <div class="col" style="overflow-y: scroll;">
 
-                            <form class="row g-2" method="post" action="">{% csrf_token %}
+                            <form class="row g-2 " method="post" action="{% url 'Register Vote' %}" style="min-height:0; max-height: 325px;">{% csrf_token %}
+                                <input type="text" class="invisible" name="title_name" value="{{slug}}">
                                 <div class="col-8">
+                                    {% for i in student_model %}
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
-                                        <label class="form-check-label" for="exampleRadios3">
-                                          Disabled radio
+                                        <input class="form-check-input" type="radio" name="student" id="{{i.name}}" value="{{i.slug}}" {% ifequal forloop.counter 1 %}checked{% endifequal %}>
+                                        <label class="form-check-label" for="{{i.name}}">
+                                          {{i.name}}
                                         </label>
                                     </div>
-
+                                    {% endfor %}
                                 </div>
                                 <div class="col-auto">
                                     <button type="submit" class="btn btn-primary mb-3">Submit </button>
