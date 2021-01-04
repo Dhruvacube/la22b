@@ -17,7 +17,7 @@ students_vote_limit = lambda: Settings.objects.values('nickname_limit').get()['n
 
 #Student entry View
 def entry(request):
-    student_model = Student.objects.values('name','slug','profile_pic','class_stu').all()
+    student_model = Student.objects.all()
     return render(
         request,
         'student-entry.html',
