@@ -13,4 +13,4 @@ class Settings(models.Model):
         return 'Settings'
 
     class Meta:
-        verbose_name_plural = "Titles"
+        verbose_name_plural = "Settings"
