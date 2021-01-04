@@ -62,7 +62,8 @@ class Student(models.Model):
         return self.name
     
     def view_profile_picture(self):
-        height = width = '50%'
+        height = '100%'
+        width = '70%'
         if self.profile_pic:
             return mark_safe(f'<img src="{self.profile_pic.url}" width="{width}" height={height}" style="border-radius: 10px;" />')
         else:
