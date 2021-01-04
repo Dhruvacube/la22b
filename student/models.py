@@ -32,13 +32,13 @@ class Student(models.Model):
     profile_pic = models.ImageField(upload_to=path_and_rename, storage=fs)
     
     class_stu = models.CharField(
-        max_length=6, 
+        max_length=10, 
         choices=(
-            ('sc1','SC-1'),
-            ('sc2', 'SC-2'),
-            ('sc3','SC-3'),
-            ('com','COMMERCE'),
-            ('arts','ARTS'),
+            ('SC-1','SC-1'),
+            ('SC-2', 'SC-2'),
+            ('SC-3','SC-3'),
+            ('COMMERCE','COMMERCE'),
+            ('ARTS','ARTS'),
         ), 
         default='sc1',
         verbose_name=_('Class')
@@ -54,6 +54,9 @@ class Student(models.Model):
     )
     note = models.TextField(blank=True,null=True)
     data = models.TextField(verbose_name=_('Title given by the others'),default=dict)
+
+    class Meta:
+        ordering = ('class_stu', 'name')
 
     def __str__(self):
         return self.name

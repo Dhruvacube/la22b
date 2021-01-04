@@ -10,8 +10,7 @@
     }
 </style>
 
-<div class="container emp-profile" style="height: 450px; min-height:0;">
-
+<div class="container emp-profile" style="height: auto; min-height:0;">
 
     <div class="row g-2">
         <div class="col-md-6 mt-4">
@@ -32,6 +31,15 @@
                 {% endfor %}
 
             </div>
+            {% if participants_model_ten %}
+            <div class="col-md-4">
+                <div class="profile-work">
+                    <p>TOP 10 PEOPLE:</p>
+                    {% for i in participants_model_ten %}
+                    <a>{{i.student.name}} - {{i.stu_vote}}</a><br/> {% endfor %}
+                </div>
+            </div>
+            {% endif %}
         </div>
 
         <div class="col">

@@ -2,6 +2,10 @@
  * Globals
  */
 
+* {
+    font-family: HoboStd;
+}
+
 
 /* Custom default button */
 
@@ -63,4 +67,14 @@ body {
     content: '';
     display: block;
     border-radius: 10px;
+}
+
+@font-face {
+    font-family: HoboStd;
+    src: url('../fonts/HoboStd.otf');
+}
+
+@font-face {
+    font-family: TektonPro-Bold;
+    src: url('../fonts/TektonPro-Bold.otf');
 }

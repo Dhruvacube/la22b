@@ -25,8 +25,17 @@ def title_entry(request):
 
 def vote(request,slug):
     title_model = get_object_or_404(Titles,slug=slug)
-    student_model = Student.objects.filter(gender=title_model.gender).values('name','slug').all()
- 
+    if title_model.title_stu == 'ALL' and title_model.gender == 'ALL':
+        student_model = Student.objects.filter().values('name','slug',).all()
+    
+    elif title_model.title_stu == 'ALL':
+        student_model = Student.objects.filter(gender=title_model.gender,).values('name','slug',).all()
+    
+    elif title_model.gender == 'ALL':
+        student_model = Student.objects.filter(class_stu=title_model.title_stu).values('name','slug',).all()
+    
+    else:
+        student_model = Student.objects.filter(gender=title_model.gender,class_stu=title_model.title_stu).values('name','slug',).all()
     return render(
         request,
         'vote.html',
@@ -36,6 +45,7 @@ def vote(request,slug):
             'slug': slug,
             'profile_stu': True,
             'total_students': total_students,
+            'participants_model_ten':Participants.objects.filter(title_part=title_model).order_by('-stu_vote').all()[:10],
         }
     )
 
@@ -55,7 +65,7 @@ def register_vote(request):
             messages.error(request, "You have voted more than 5 times a day for a specific person!")
             return redirect(reverse('Vote Title', args=[title_slug]))
             
-        elif request.session.get(student_dict) or request.session.get(student_dict,0) <= title_vote_limit():
+        elif request.session.get(student_dict) or request.session.get(student_dict,0) < title_vote_limit():
             try: request.session[student_dict] = request.session[student_dict] + 1
             except: request.session[student_dict] = 1
                 

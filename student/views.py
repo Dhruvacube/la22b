@@ -30,16 +30,16 @@ def entry(request):
 
 def search(request):
     if request.method == 'GET':
-        query = request.GET['query']
+        query = formattedNickname(request.GET['query'])
         if len(query)>350:
             stu_list = Student.onjects.none()
             messages.warning(request, "Please limit your query to 350 characters or less only!")
-        else:
-            stuName = Student.objects.filter(name__icontains=query)
-            stuClass = Student.objects.filter(class_stu__icontains=query)
-            stutitle = Student.objects.filter(data__icontains=query)
 
-            stu_list = stuName.union(stuClass,stutitle)
+        stuName = Student.objects.filter(name__icontains=query.strip(' '))
+        stuClass = Student.objects.filter(class_stu__icontains=query.strip(' '))
+        stutitle = Student.objects.filter(data__icontains=query.strip(' '))
+
+        stu_list = stuName.union(stuClass,stutitle)
         return render(
             request,
             'student-entry.html',
@@ -56,6 +56,7 @@ def search(request):
 def student(request, slug):
     student = get_object_or_404(Student,slug=slug)
     titles = Titles.objects.filter(gender=student.gender).all()
+    titles_all = Titles.objects.filter(gender='ALL').all()
 
     t1 = ast.literal_eval(student.data).get('titles')
     t = t1 if t1 else ['Dummy','List'] 
@@ -66,7 +67,7 @@ def student(request, slug):
         {
             'student':student,
             'media':settings.MEDIA_URL,
-            'titles':titles,
+            'titles':titles.union(titles_all),
             'slug':slug,
             'data' : sorted(t, key = lambda x: x[1], reverse=True),
             'titles_404': False if titles.count() else True,
@@ -89,7 +90,7 @@ def addnicknames(request, slug):
             messages.error(request, "You have voted more than 5 times a day for a specific person!")
             return redirect(reverse('Student Profile',args=[slug]))
         
-        elif request.session.get(slug) or request.session.get(slug,0) <= students_vote_limit() :
+        elif request.session.get(slug) or request.session.get(slug,0) < students_vote_limit() :
             data_list = ast.literal_eval(Student.objects.filter(slug=slug).values('data').get()['data'])
             titles = data_list.get('titles')
             

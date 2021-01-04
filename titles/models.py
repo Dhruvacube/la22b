@@ -9,11 +9,25 @@ class Titles(models.Model):
     gender = models.CharField(
         max_length=6, 
         choices=(
+            ('ALL','ALL'),
             ('m','Male'),
             ('f', 'Female'),
         ), 
         default='m',
         verbose_name=_('Gender')
+    )
+    title_stu = models.CharField(
+        max_length=10, 
+        choices=(
+            ('ALL','ALL'),
+            ('SC-1','SC-1'),
+            ('SC-2', 'SC-2'),
+            ('SC-3','SC-3'),
+            ('COMMERCE','COMMERCE'),
+            ('ARTS','ARTS'),
+        ), 
+        default='sc1',
+        verbose_name=_('Class')
     )
     slug = models.CharField(max_length=250,verbose_name=_('Slug of the Title'),unique=True, blank=True, null=True)
     total_vote = models.PositiveBigIntegerField(_('Total No of Vote Registered'),default=0)
