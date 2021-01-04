@@ -63,6 +63,16 @@ body {
     border-bottom: 2px solid #0062cc;
 }
 
+.profile-edit-btn {
+    border: none;
+    border-radius: 1.5rem;
+    width: 70%;
+    padding: 2%;
+    font-weight: 600;
+    color: #6c757d;
+    cursor: pointer;
+}
+
 .profile-work {
     padding: 14%;
     margin-top: -15%;

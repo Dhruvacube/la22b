@@ -1,22 +1,36 @@
 {% extends 'layout.html' %} {% load static %}{% block body %}
 <link href="{% static 'css/student.css' %}" rel="stylesheet">
 
+<style>
+    body {
+        background-image: url('{% static "img/image7.jpg" %}');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+
 <div class="container emp-profile" style="height: 450px; min-height:0;">
 
-    {% for message in messages %}
-    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-        <strong>Note:</strong> {{ message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    {% endfor %}
 
     <div class="row g-2">
         <div class="col-md-6 mt-4">
             <div class="profile-head">
                 <h4>
-                    {{title_model.title_name}}
+                    <u>
+                        {{title_model.title_name}}
+                    </u>
                 </h4>
-                <p class="proile-rating">RANKINGS : <span>8/10</span></p>
+                <p class="proile-rating">TOTAL VOTES : <span>{{title_model.total_vote}}</span></p>
+
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    <strong>Note:</strong> {{ message }}
+                    <i class='bx bxs-upvote bx-tada'></i>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+
             </div>
         </div>
 

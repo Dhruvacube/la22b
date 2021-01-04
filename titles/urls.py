@@ -7,4 +7,5 @@ urlpatterns = [
     path('', title_entry, name="View Title"),
     path('vote/<slug:slug>', vote, name="Vote Title"),
     path('registervote/', register_vote,name="Register Vote"),
+    path('successredirect/<slug:slug>', successredirect, name="Success Redirect")
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

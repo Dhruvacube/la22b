@@ -1,6 +1,10 @@
 {% extends 'layout.html' %}{% load static %}{% load humanize %}{% block body %}
 <link href="{% static 'css/student.css' %}" rel="stylesheet">
-
+<style>
+    body {
+        background-image: url('{% static "img/image7.jpg" %}');
+    }
+</style>
 <div class="row row-cols-1 row-cols-md-3 g-4" style="margin: 10px;">
     {% for i in title_model %}
     <div class="col">

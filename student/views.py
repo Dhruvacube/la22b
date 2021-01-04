@@ -4,12 +4,14 @@ from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from main.models import *
 from titles.models import *
 
 from .models import *
 from .templatetags import extras
 
 total_students = lambda: Student.objects.count()
+students_vote_limit = lambda: Settings.objects.values('nickname_limit').get()['nickname_limit']
 
 # Create your views here.
 
@@ -27,25 +29,28 @@ def entry(request):
     )
 
 def search(request):
-    query = request.GET['query']
-    if len(query)>350:
-        stu_list = Student.onjects.none()
-        messages.warning(request, "Please limit your query to 350 characters or less only!")
-    else:
-        stuName = Student.objects.filter(name__icontains=query)
-        stuClass = Student.objects.filter(class_stu__icontains=query)
-        stutitle = Student.objects.filter(data__icontains=query)
+    if request.method == 'GET':
+        query = request.GET['query']
+        if len(query)>350:
+            stu_list = Student.onjects.none()
+            messages.warning(request, "Please limit your query to 350 characters or less only!")
+        else:
+            stuName = Student.objects.filter(name__icontains=query)
+            stuClass = Student.objects.filter(class_stu__icontains=query)
+            stutitle = Student.objects.filter(data__icontains=query)
 
-        stu_list = stuName.union(stuClass,stutitle)
-    return render(
-        request,
-        'student-entry.html',
-        {
-            'total_students': total_students,
-            'media': settings.MEDIA_URL,
-            'student_model': stu_list,
-        }
-    )
+            stu_list = stuName.union(stuClass,stutitle)
+        return render(
+            request,
+            'student-entry.html',
+            {
+                'total_students': total_students,
+                'media': settings.MEDIA_URL,
+                'student_model': stu_list,
+            }
+        )
+    else:
+        return redirect(reverse('Student Entry Page'))
 
 # Student Views
 def student(request, slug):
@@ -75,37 +80,43 @@ def student(request, slug):
 def addnicknames(request, slug):
     if request.method=="POST":
         nickname_req = request.POST['nickname']
-        nickname = formattedNickname(nickname_req)
+        nickname = formattedNickname(nickname_req.strip(' '))
         if not nickname: 
             messages.error(request, "You entered only special characters which is not allowed!")
             return redirect(reverse('Student Profile',args=[slug]))
         
-        data_list = ast.literal_eval(Student.objects.filter(slug=slug).values('data').get()['data'])
-        titles = data_list.get('titles')
+        if request.session.get(slug, 0) > students_vote_limit():
+            messages.error(request, "You have voted more than 5 times a day for a specific person!")
+            return redirect(reverse('Student Profile',args=[slug]))
         
-        if titles:
-            n=0
-            for i in titles:
-                h=0
-                for j in i:
-                    if j == nickname:
-                        print(j,i)
-                        vote = int(i[-1] + 1)
-                        print(vote)
-                        titles.remove(i)
-                        titles.append([nickname, vote])
-                        n+=1
-                        h+=1
-                        break
-                if h != 0: break
-            if n == 0: titles.append([nickname, 1])
-        else: titles = [[nickname,1]]
-        data_list.update({'titles': titles})
+        elif request.session.get(slug) or request.session.get(slug,0) <= students_vote_limit() :
+            data_list = ast.literal_eval(Student.objects.filter(slug=slug).values('data').get()['data'])
+            titles = data_list.get('titles')
+            
+            if titles:
+                n=0
+                for i in titles:
+                    h=0
+                    for j in i:
+                        if j == nickname:
+                            print(j,i)
+                            vote = int(i[-1] + 1)
+                            print(vote)
+                            titles.remove(i)
+                            titles.append([nickname, vote])
+                            n+=1
+                            h+=1
+                            break
+                    if h != 0: break
+                if n == 0: titles.append([nickname, 1])
+            else: titles = [[nickname,1]]
+            data_list.update({'titles': titles})
 
-        Student.objects.filter(slug=slug).update(data=data_list)
-    
-    messages.success(request, "The Nickname has succesfully added!")
-    return redirect(reverse('Student Profile',args=[slug]))
+            Student.objects.filter(slug=slug).update(data=data_list)
+            messages.success(request, "The Nickname has succesfully added!")
+            return redirect(reverse('Student Profile',args=[slug]))
+    else: 
+        return redirect(reverse('Student Entry Page'))
 
 # Returns a clean formatted nickname
 def formattedNickname(nickname):

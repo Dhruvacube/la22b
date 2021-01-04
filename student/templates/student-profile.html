@@ -11,11 +11,14 @@
     {% endfor %}
 
     <div class="row g-2">
+        <!-- Profile Photo -->
         <div class="col-md-4">
             <div class="profile-img">
                 <img src="{{media}}{{student.profile_pic}}" alt="Photo of {{student.name}}" style="border-radius: 5%;" />
             </div>
         </div>
+
+        <!-- Details -->
         <div class="col-md-6 mt-4">
             <div class="profile-head">
                 <h5>
@@ -25,11 +28,20 @@
                     {% ifequal student.class_stu 'sc1' %}SC-1{% endifequal %} {% ifequal student.class_stu 'sc2' %}SC-2{% endifequal %} {% ifequal student.class_stu 'sc3' %}SC-3{% endifequal %} {% ifequal student.class_stu 'com' %}COMMERCE{% endifequal %}
                 </h6>
                 <h6> {% ifequal student.class_stu 'arts' %}ARTS{% endifequal %}</h6>
-                <p class="proile-rating">RANKINGS : <span>8/10</span></p>
+
+                <!-- of the Mr/ Mrs SC-1 -->
+                <p class="proile-rating">TOP NICKNAME : <span>{% for i in data %}{% ifequal forloop.counter 1 %}{{i|get_val:0}}{% endifequal %}{% endfor %}</span></p>
             </div>
         </div>
+
+        <!-- Print Page Button -->
+        <div class="col-md-2">
+            <i class="bi bi-printer"></i> <input type="submit" class="profile-edit-btn" name="btnAddMore" onclick='window.print();' value="Print Page" />
+        </div>
     </div>
+
     <div class="row g-2">
+        <!-- Voting sidebar  -->
         <div class="col-md-4">
             {% if not titles_404 %}
             <div class="profile-work">
@@ -41,6 +53,8 @@
         </div>
 
         <div class="col-md-8">
+
+            <!-- Add nickname form -->
             <ul class="nav nav-tabs profile-tab" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Give Nickname</a>
@@ -52,6 +66,7 @@
                 {% endif %}
             </ul>
 
+            <!-- View nickname tab -->
             <div class="tab-content  profile-tab" id="myTabContent" style="margin-top: 10px;">
                 <div style="margin: 30px, 30px, 30px, 5px; height: 100px;" class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="row">
