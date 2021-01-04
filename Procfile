@@ -1,1 +1,1 @@
-web: gunicorn farewellsc1.wsgi
+web: gunicorn la22b.wsgi
