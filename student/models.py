@@ -6,6 +6,7 @@ from django.db import models
 from django.utils.html import mark_safe
 from django.utils.translation import gettext_lazy as _
 from gdstorage.storage import GoogleDriveStorage
+from PIL import Image
 
 if settings.PRODUCTION_SERVER:
     fs = GoogleDriveStorage()
@@ -15,15 +16,15 @@ else:
 # Create your models here.
 def path_and_rename(instance, filename):
     from uuid import uuid4
+
     upload_to = 'profile_pic'
     ext = filename.split('.')[-1]
-    # get filename
+    
     if instance.pk:
         filename = '{}.{}'.format(instance.pk, ext)
     else:
-        # set filename as random string
         filename = '{}.{}'.format(uuid4().hex, ext)
-        # return the whole path to the file
+
     return os.path.join(upload_to, filename)
 
 class Student(models.Model):
@@ -75,6 +76,7 @@ class Student(models.Model):
         for i in self.name.split(' '): self.nameb += str(i.capitalize()) + ' '
         self.name = self.nameb
         self.slug = '-'.join(self.name.lower().translate({ord(c): None for c in string.whitespace}))
+
         return super(Student, self).save(*args, **kwargs)
     
     def delete(self, using=None, keep_parents=False):

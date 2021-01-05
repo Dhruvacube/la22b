@@ -6,7 +6,8 @@ from .models import Student
 
 # Register your models here.
 class StudentAdmin(admin.ModelAdmin):
-    search_fields = list_display = list_filter = ('name', 'gender','class_stu') 
+    search_fields = list_display = ('name', 'gender','class_stu') 
+    list_filter = ('gender','class_stu') 
     readonly_fields = ('view_profile_picture','slug',)
     list_per_page = 20
 

@@ -1,0 +1,44 @@
+{% extends 'layout.html' %} {% load static %}{% load humanize %}{% block body %}
+<style>
+    body {
+        background-image: url('{% static "/img/3.jpeg" %}');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+<main class="container">
+    <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+        <img class="me-3" src="{% static 'img/logo.png' %}" alt="Logo" width="48" height="48">
+        <div class="lh-1">
+            <h1 class="h6 mb-0 text-white lh-1">{{titles_model.title_name}}</h1>
+            <small>Total Votes : {{titles_model.total_vote|intcomma}}</small>
+        </div>
+    </div>
+
+    {% ifequal titles_model.total_vote 0 %}
+
+    <script type="text/javascript">
+        window.location = "{% url 'Leaderboard' %}";
+    </script>{% else %}
+
+    <div class="my-3 p-3 bg-white rounded shadow-sm">
+
+        {% for j in participants_model %}
+        <div class="d-flex text-muted pt-3">
+            <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="40" height="30" src="{{j.student.profile_pic.url}}">
+
+            <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                <div class="d-flex justify-content-between">
+                    <strong class="text-gray-dark">{{j.student.name}}</strong>
+                </div>
+                <span class="d-block">@{{j.stu_vote}} {% ifequal j.stu_vote 1 %}Vote{% else %}Votes{% endifequal %}</span>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+    {% endifequal %}
+
+</main>
+{% endblock %}
