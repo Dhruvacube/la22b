@@ -3,6 +3,7 @@ from django.db.models import F
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from main.models import *
+from main.views import date_start_end
 from student.models import *
 from student.views import total_students
 
@@ -46,6 +47,7 @@ def vote(request,slug):
             'profile_stu': True,
             'total_students': total_students,
             'participants_model_ten':Participants.objects.filter(title_part=title_model).order_by('-stu_vote').all()[:10],
+            'date_start_end':date_start_end,
         }
     )
 

@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from main.models import *
+from main.views import date_start_end
 from titles.models import *
 
 from .models import *
@@ -70,6 +71,7 @@ def student(request, slug):
             'data_404': False if len(ast.literal_eval(student.data) if student.data else []) else True,
             'total_students':total_students,
             'profile_stu': True,
+            'date_start_end': date_start_end,
         }
     )
 

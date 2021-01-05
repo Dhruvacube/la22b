@@ -62,7 +62,7 @@
                                 <div class="col-8">
                                     {% for i in student_model %}
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="student" id="{{i.name}}" value="{{i.slug}}" {% ifequal forloop.counter 1 %}checked{% endifequal %}>
+                                        <input class="form-check-input" type="radio" name="student" id="{{i.name}}" value="{{i.slug}}" {% ifequal forloop.counter 1 %}checked{% endifequal %} {% if date_start_end %}disabled{% endif %}>
                                         <label class="form-check-label" for="{{i.name}}">
                                           {{i.name}}
                                         </label>
@@ -70,7 +70,7 @@
                                     {% endfor %}
                                 </div>
                                 <div class="col-auto">
-                                    <button type="submit" class="btn btn-primary mb-3">Submit </button>
+                                    <button type="submit" class="btn btn-primary mb-3" {% if date_start_end %}disabled{% endif %}>Submit </button>
                                 </div>
                             </form>
 

@@ -78,7 +78,7 @@
                             <form class="row g-2" method="post" action="{% url 'Add Nickname' slug=slug %}">{% csrf_token %}
                                 <div class="col-8">
                                     <label for="nickname" class="visually-hidden">Type the nickname you want to give</label>
-                                    <input class="form-control" name="nickname" list="datalistOptions" placeholder="Type the nickname you want to give">
+                                    <input class="form-control" name="nickname" list="datalistOptions" placeholder="Type the nickname you want to give" {% if date_start_end %}disabled{% endif %}>
                                     <datalist id="datalistOptions">
                                         {% for i in data %}
                                         <option value="{{i|get_val:0}}">
@@ -87,7 +87,7 @@
                                     <small><strong>Please do not enter any special character!</strong></small>
                                 </div>
                                 <div class="col-auto">
-                                    <button type="submit" class="btn btn-primary mb-3">Submit </button>
+                                    <button type="submit" class="btn btn-primary mb-3" {% if date_start_end %}disabled{% endif %}>Submit </button>
                                 </div>
                             </form>
 
@@ -97,24 +97,25 @@
 
                 {% if not data_404 %}
                 <div class="tab-pane fade" style="overflow-y: scroll; overflow-x:hidden; height: 200px;" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label><u>Nickname</u></label>
-                        </div>
-                        <div class="col-md-6">
-                            <p><u>No of times people gave that name</u></p>
-                        </div>
-                    </div>
-                    {% for i in data %}
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>{{i|get_val:0}}</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>{{i|get_val:1}} times</p>
-                        </div>
-                    </div>
-                    {% endfor %}
+                    <table class="table-responsive table-sm">
+                        <table class="table caption-top">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nickname</th>
+                                    <th scope="col">No of times people gave that name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in data %}
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>{{i|get_val:0}}</td>
+                                    <td>{{i|get_val:1}} {% if i|get_val:1 <= 1 %}time{% else %}times{% endif %}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                 </div>
                 {% endif %}
             </div>
