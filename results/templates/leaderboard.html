@@ -16,11 +16,11 @@
         </div>
     </div>
 
-    {% for i in titles_model %} {% ifequal i.total_vote 0 %}{% else %}
+    {% for i in titles_model %} {% with n=0 %}{% ifequal i.total_vote 0 %}{% else %}
     <div class="my-3 p-3 bg-white rounded shadow-sm">
-        <h6 class="border-bottom pb-2 mb-0">{{i.title_name}}</h6>
+        <h6 class="border-bottom pb-2 mb-0">Top 10 : <u>{{i.title_name}}</u></h6>
 
-        {% with n=0 %} {% for j in participants_model %}{% ifequal n 10 %}{% else %}{% ifequal j.title_part.title_name i.title_name %}{% increment n %}
+        {% for j in participants_model %}{% ifequal n 10 %}{% increment n %}{% else %}{% ifequal j.title_part.title_name i.title_name %}{% increment n %}
         <div class="d-flex text-muted pt-3">
             <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="40" height="30" src="{{j.student.profile_pic.url}}">
 
@@ -32,13 +32,13 @@
                 <span class="d-block">@{{j.stu_vote|intcomma}} {% ifequal j.stu_vote 1 %}Vote{% else %}Votes{% endifequal %}</span>
             </div>
         </div>
-        {% endifequal %}{% endifequal %}{% endfor %}{% endwith %}
+        {% endifequal %}{% endifequal %}{% endfor %}
 
         <small class="d-block text-end mt-3">
-      <a href="{% url 'Leaderboard Each' slug=i.slug %}">View More...</a>
-    </small>
+            <a href="{% url 'Leaderboard Each' slug=i.slug %}" class="btn btn-outline-primary">View More...</a>
+        </small>
     </div>
-    {% endifequal %} {% endfor %}
+    {% endifequal %} {% endwith %}{% endfor %}
 
 </main>
 {% endblock %}

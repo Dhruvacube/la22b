@@ -5,7 +5,7 @@ from .models import *
 
 # Register your models here.
 class TitlesAdmin(admin.ModelAdmin):
-    search_fields = list_display = ('title_name','title_stu',)
+    search_fields = list_display = ('title_name','title_stu','total_vote')
     list_filter = ('title_stu',) 
     readonly_fields = ('slug',)
     list_per_page = 20
