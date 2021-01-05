@@ -12,6 +12,7 @@ urlpatterns = [
     path('results/',include('results.urls')),
     path('student/',include('student.urls')),
     path('titles/',include('titles.urls')),
+    path('results/',include('results.urls')),
 
     url(r'^logout/$', views.user_logout, name='signout'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

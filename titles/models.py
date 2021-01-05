@@ -49,6 +49,7 @@ class Titles(models.Model):
     
     class Meta:
         verbose_name_plural = "Titles"
+        ordering = ('-total_vote', 'title_name')
 
 class Participants(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name=_('Student Model'))
@@ -60,3 +61,4 @@ class Participants(models.Model):
     
     class Meta:
         verbose_name_plural = "Participants"
+        ordering = ('-stu_vote', 'title_part')

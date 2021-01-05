@@ -1,6 +1,5 @@
 import ast
 
-from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -23,7 +22,6 @@ def entry(request):
         'student-entry.html',
         {
             'total_students': total_students,
-            'media': settings.MEDIA_URL,
             'student_model': student_model,
         }
     )
@@ -45,7 +43,6 @@ def search(request):
             'student-entry.html',
             {
                 'total_students': total_students,
-                'media': settings.MEDIA_URL,
                 'student_model': stu_list,
             }
         )
@@ -66,7 +63,6 @@ def student(request, slug):
         'student-profile.html',
         {
             'student':student,
-            'media':settings.MEDIA_URL,
             'titles':titles.union(titles_all),
             'slug':slug,
             'data' : sorted(t, key = lambda x: x[1], reverse=True),

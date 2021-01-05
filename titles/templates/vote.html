@@ -32,11 +32,17 @@
 
             </div>
             {% if participants_model_ten %}
-            <div class="col-md-4">
-                <div class="profile-work">
+            <div class="col-md-4 border-primary">
+                <div class="row" style="font-size: 12px;color:#818182;font-weight: 600;">
                     <p>TOP 10 PEOPLE:</p>
-                    {% for i in participants_model_ten %}
-                    <a>{{i.student.name}} - {{i.stu_vote}}</a><br/> {% endfor %}
+                    <ul class="list-group">
+                        {% for i in participants_model_ten %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{i.student.name}}
+                            <span class="badge bg-primary rounded-pill">{{i.stu_vote}}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
             {% endif %}

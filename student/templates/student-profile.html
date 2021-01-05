@@ -29,8 +29,9 @@
                 </h6>
                 <h6> {% ifequal student.class_stu 'arts' %}ARTS{% endifequal %}</h6>
 
-                <!-- of the Mr/ Mrs SC-1 -->
+                {% if not data_404 %}
                 <p class="proile-rating">TOP NICKNAME : <span>{% for i in data %}{% ifequal forloop.counter 1 %}{{i|get_val:0}}{% endifequal %}{% endfor %}</span></p>
+                {% endif %}
             </div>
         </div>
 
