@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}{% load static %}{% block body %}
+<link href="{% static 'css/student.css' %}" rel="stylesheet">
+<style>
+    body {
+        background-image: url('{% static "/anime/female/chika_fujiwara.jpeg" %}');
+    }
+</style>
+<script>
+    $(document).ready(function() {
+        //change selectboxes to selectize mode to be searchable
+        $("select").select2();
+    });
+</script>
+<!--<div class="col-md-6 mt-4">
+    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+        <option selected>Select Your Name</option>
+        {% for i in student_objects %}
+        <option value="{{i.slug}}">{{i.name}} · {{i.class_stu}}</option>
+        {% endfor %}
+    </select>
+</div>-->
+<div class="container emp-profile" style="height: auto; min-height:0; margin-top: 5%;">
+
+    <div class="row g-2">
+        <!-- Profile Photo -->
+        <div class="col-md-4">
+            <div class="profile-img">
+                <img src="{% static randomAnimeChar %}" alt="Photo of {{randomAnimeChar}}" style="border-radius: 5%; width: 200px; height: 200px;" />
+            </div>
+        </div>
+
+        <div class="col-md-6 mt-4">
+            <div class="profile-head" style="padding: 0%;">
+                <h5>
+                    Which Anime Character are you ?
+                </h5>
+            </div>
+        </div>
+
+        <div class="col-md-8"></div>
+
+    </div>
+</div>
+{% endblock %}

@@ -6,7 +6,6 @@ from django.db import models
 from django.utils.html import mark_safe
 from django.utils.translation import gettext_lazy as _
 from gdstorage.storage import GoogleDriveStorage
-from PIL import Image
 
 if settings.PRODUCTION_SERVER:
     fs = GoogleDriveStorage()
