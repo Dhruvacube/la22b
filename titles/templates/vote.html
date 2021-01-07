@@ -34,7 +34,7 @@
             <div class="col-md-4 border-primary">
                 <div class="row" style="font-size: 12px;color:#818182;font-weight: 600;">
                     <p>TOP 10 PEOPLE:</p>
-                    <ul class="list-group">
+                    <ul class="list-group ">
                         {% for i in participants_model_ten %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             {{i.student.name}}
@@ -51,7 +51,7 @@
 
             <div class="tab-content  profile-tab">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="row">
+                    <div class="row border border-primary rounded">
                         <div class="col" style="overflow-y: scroll;">
 
                             <form class="row g-2 " method="post" action="{% url 'Register Vote' %}" style="min-height:0; max-height: 325px;">{% csrf_token %}

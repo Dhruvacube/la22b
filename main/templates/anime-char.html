@@ -2,7 +2,7 @@
 <link href="{% static 'css/student.css' %}" rel="stylesheet">
 <style>
     body {
-        background-image: url('{% static "/anime/female/chika_fujiwara.jpeg" %}');
+        background-image: url('{% static backgroundAnime %}');
     }
 </style>
 <script>
@@ -11,14 +11,6 @@
         $("select").select2();
     });
 </script>
-<!--<div class="col-md-6 mt-4">
-    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-        <option selected>Select Your Name</option>
-        {% for i in student_objects %}
-        <option value="{{i.slug}}">{{i.name}} · {{i.class_stu}}</option>
-        {% endfor %}
-    </select>
-</div>-->
 <div class="container emp-profile" style="height: auto; min-height:0; margin-top: 5%;">
 
     <div class="row g-2">
@@ -31,13 +23,34 @@
 
         <div class="col-md-6 mt-4">
             <div class="profile-head" style="padding: 0%;">
-                <h5>
+                <h3>
                     Which Anime Character are you ?
-                </h5>
+                </h3>
+
+                <!-- Form of name submit -->
+                <form id="form" class="row g-3" method="post" action="{% url 'Which Anime Character are you Results' %}">{% csrf_token %}
+
+                    <div class="col-auto">
+                        <select class="form-select form-select-lg mb-3" name="name" required>
+                            <option selected>Select Your Name</option>
+                            {% for i in student_objects %}
+                            <option value="{{i.slug}}">{{i.name}} · {{i.class_stu}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div id="submitbutton" class="col-auto">
+                        <button type="submit" class="btn btn-primary mb-3">Check</button>
+                    </div>
+                    <div id="spinner" class="col-auto invisible">
+                        <button class="btn btn-primary" type="button" disabled>
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                        </button>
+                    </div>
+
+                </form>
             </div>
         </div>
-
-        <div class="col-md-8"></div>
 
     </div>
 </div>
