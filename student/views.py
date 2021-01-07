@@ -98,9 +98,7 @@ def addnicknames(request, slug):
                     h=0
                     for j in i:
                         if j == nickname:
-                            print(j,i)
                             vote = int(i[-1] + 1)
-                            print(vote)
                             titles.remove(i)
                             titles.append([nickname, vote])
                             n+=1
