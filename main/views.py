@@ -1,8 +1,9 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from student.models import Student
@@ -68,14 +69,18 @@ def animeCharResult(request):
 
 def returnAnimeName(path_of_pic):
     from student.views import formattedNickname
-    list_path = path_of_pic.split('\\')[-1].split('.')[0].replace('_',' ')
+    if settings.PRODUCTION_SERVER:
+        list_path = path_of_pic.split('\\')[-1].split('/')[-1].split('.')[0].replace('_',' ') #heroku specific
+    else:
+        list_path = path_of_pic.split('\\')[-1].split('.')[0].replace('_',' ')
     return formattedNickname(list_path)
 
 
 #A function to generate the random anime (optionally a name of the student)
 def randomAnimeChar(namelist=None): 
-    import os, random, string
-    from django.conf import settings
+    import os
+    import random
+    import string
     a = [0,1,2]
 
     if namelist:
