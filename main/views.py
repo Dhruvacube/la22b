@@ -59,9 +59,9 @@ def animeCharResult(request):
                 'student_model': student_obj,
                 'random_anime_char': random_anime_char,
                 'backgroundAnime': randomAnimeChar(),
-                'display_footer':True,
                 'anime_char_name': returnAnimeName(random_anime_char),
                 'total_students':total_students,
+                'message_conxt': 'Checking',
             }
         )
     else: return redirect(reverse('Which Anime Character are you?'))
@@ -100,5 +100,3 @@ def randomAnimeChar(namelist=None):
         folder_name =  random.choice(folder)
         return os.path.join('anime', folder_name, random.choice(os.listdir(settings.BASE_DIR / os.path.join('main', 'static', 'anime', folder_name))))
 
-
-def checking(request): pass

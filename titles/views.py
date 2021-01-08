@@ -94,7 +94,7 @@ def register_vote(request):
 
 def successredirect(request,slug):
     return render(request,
-    'vote_success.html',
+    'success/vote_success.html',
     {
         'redirect_link': reverse('Vote Title',args=[slug]),
     }

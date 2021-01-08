@@ -81,3 +81,20 @@ footer {
     text-align: center;
     padding: 10px;
 }
+
+#loaderpseudo {
+    position: absolute;
+    z-index: 1;
+    overflow-y: hidden;
+    margin-left: 6%;
+    margin-right: 6%;
+}
+
+@media only screen and (max-width: 768px) {
+    #loaderpseudo {
+        position: relative;
+    }
+    body {
+        overflow-y: hidden;
+    }
+}

@@ -1,48 +1,30 @@
 {% extends 'layout.html' %}{% load static %}{% block body %}
 <link href="{% static 'css/student.css' %}" rel="stylesheet">
-<!--<script src="{% static 'js/submit.js' %}"></script>-->
-<style>
-    body {
-        background-image: url('{% static backgroundAnime %}');
-    }
-    
-    footer {
-        display: none;
-    }
-</style>
+<script src="{% static 'js/anime.js' %}"></script>
 <script>
-    function addclassfnc(x) {
-        if (x.matches) { // If media query matches
-            $('.bx').addClass("bxs-down-arrow-alt");
-            $('.bx').removeClass("bxs-right-arrow-alt");
-            $('.bx').removeClass("bx-fade-left");
-            $('#mt-5').removeClass("mt-5");
-            $('.bx').addClass("bx-fade-down");
-        } else {
-            $('.bx').removeClass("bxs-down-arrow-alt");
-            $('.bx').removeClass("bx-fade-down");
-            $('.bx').addClass("bxs-right-arrow-alt");
-            $('#mt-5').addClass("mt-5");
-            $('.bx').addClass("bx-fade-left");
-        }
-    }
-
-    var x = window.matchMedia("(max-width: 767px)")
-    addclassfnc(x) // Call listener function at run time
-    x.addListener(addclassfnc) // Attach listener function on state changes
-
-    jQuery(document).ready(function($) {
-        if (x.matches) { // If media query matches
-            $('.bx').addClass("bxs-down-arrow-alt");
-            $('.bx').addClass("bx-fade-down");
-        } else {
-            $('.bx').addClass("bxs-right-arrow-alt");
-            $('#mt-5').addClass("mt-5");
-            $('.bx').addClass("bx-fade-left");
-        }
-    });
+    //Checking loader js in jquery
+    var timeoutset;
+    $('body').css("background-image", "none");
+    $('body').addClass("bg-dark");
+    timeoutset = setTimeout(function() {
+        $('body').css("background-image", "url('{% static backgroundAnime %}')");
+        $('#loaderpseudo').remove();
+        $('#result').removeClass("invisible");
+        clearTimeout(timeoutset);
+    }, 4000)
 </script>
-<div class="container emp-profile" style="height: auto; min-height:0; margin-top: 5%;">
+
+
+<!-- Pseudo Loader -->
+<div class="container" id="loaderpseudo">
+    <div class="d-flex justify-content-center" style="margin-top: 10%;">
+        <span class="spinner-grow text-light" style="width: 100px; height: 100px;" role="status"></span>
+    </div>
+    <h3 class="text-light text-center mt-1">{{message_conxt|title}} ....</h3>
+</div>
+
+<!-- Results -->
+<div id="result" class="container emp-profile invisible" style="height: auto; min-height:0; margin-top: 5%;">
     <div class="row g-2 text-center mb-2 border border-primary rounded">
         <h3><strong class="text-primary">{{student_model.name}}</strong> you are <strong class="text-success">{{anime_char_name}}</strong></h3>
     </div>

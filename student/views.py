@@ -66,7 +66,7 @@ def student(request, slug):
             'student':student,
             'titles':titles.union(titles_all),
             'slug':slug,
-            'data' : sorted(t, key = lambda x: x[1], reverse=True),
+            'data' : t,
             'titles_404': False if titles.count() else True,
             'data_404': False if len(ast.literal_eval(student.data) if student.data else []) else True,
             'total_students':total_students,
