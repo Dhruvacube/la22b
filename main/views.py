@@ -37,7 +37,7 @@ def home(request):
 def animeChar(request):
     return render(
         request,
-        'anime-char.html',
+        'fun_games/anime_char/anime-char.html',
         {
             'total_students':total_students,
             'student_objects': Student.objects.values('name','slug','class_stu').all(),
@@ -54,7 +54,7 @@ def animeCharResult(request):
         random_anime_char = randomAnimeChar(namelist=(student_obj.gender, student_obj.name))
         return render(
             request,
-            'anime-char-result.html',
+            'fun_games/anime_char/anime-char-result.html',
             {
                 'student_model': student_obj,
                 'random_anime_char': random_anime_char,
@@ -100,3 +100,5 @@ def randomAnimeChar(namelist=None):
         folder_name =  random.choice(folder)
         return os.path.join('anime', folder_name, random.choice(os.listdir(settings.BASE_DIR / os.path.join('main', 'static', 'anime', folder_name))))
 
+
+def checking(request): pass

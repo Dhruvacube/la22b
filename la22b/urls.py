@@ -12,6 +12,8 @@ urlpatterns = [
     path('anime-characters-are-you/', views.animeChar, name="Which Anime Character are you?"),
     path('anime-characters-are-you-result/', views.animeCharResult, name="Which Anime Character are you Results"),
 
+    path('checking/', views.checking,name="Checking"),
+
     path('results/',include('results.urls')),
     path('student/',include('student.urls')),
     path('titles/',include('titles.urls')),
