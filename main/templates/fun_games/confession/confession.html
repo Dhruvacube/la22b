@@ -1,0 +1,94 @@
+{% extends 'layout.html' %} {% load static %}{% load humanize %}{% load random_choice_module %}{% block body %}
+<style>
+    body {
+        background-image: url('{% static "/img/3.jpeg" %}');
+        background-position: center;
+        background-size: cover;
+    }
+</style>
+<main class="container">
+    <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+        <img class="me-3" src="{% static 'img/logo.png' %}" alt="Logo" width="48" height="48">
+        <div class="lh-1">
+            <small>Total Confessions : {{total_confession|intcomma}}</small>
+        </div>
+    </div>
+
+    <div class="my-3 p-3 bg-white rounded shadow-sm">
+        <div class="d-flex text-muted pt-3">
+            <div class="bd-placeholder-img flex-shrink-0 me-2 rounded">
+                <i class='bx bxl-dropbox text-light rounded' style="font-size: 32px; margin-right: 5px; background-color: {{fill_colour_list|random_choice}};"></i>
+            </div>
+            <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                <div class="justify-content-between">
+                    <form class="row">
+                        <div class="col-9">
+                            <label for="confession" class="visually-hidden">Confession</label>
+                            <input type="text" class="form-control" name="confession" placeholder="Type your confession ...">
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-primary mb-3"><i class='bx bxs-send bx-tada bx-rotate-270' ></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-success">Are you sure ?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure that you want to put this <b class="text-success">confession</b> into <b class="text-success">confession box</b> ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">X</button>
+                    <button type="button" class="btn btn-primary"><i class='bx bxs-send bx-tada bx-rotate-270' ></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="my-3 p-3 bg-white rounded shadow-sm">
+
+        {% for j in confession_list %}
+        <div class="d-flex text-muted pt-3">
+            <div class="bd-placeholder-img flex-shrink-0 me-2 rounded">
+                <i class='bx bxl-dropbox text-light rounded' style="font-size: 32px; margin-right: 5px; background-color: {{fill_colour_list|random_choice}};"></i>
+            </div>
+            <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                <div class="d-flex justify-content-between">
+                    <strong class="text-gray-dark">{{j.date|naturaltime}}</strong>
+                </div>
+                <span class="d-block">{{confession}}</span>
+            </div>
+        </div>
+        {% endfor %} {% if view_more %}
+        <small class="d-block text-end mt-3">
+            <a href="{% url 'Confession More' %}" class="btn btn-outline-primary">See More...</a>
+        </small>{% endif %}
+
+
+        <!-- when no confessions -->
+        {% if display_404 %}
+        <div class="d-flex text-muted pt-3">
+            <div class="bd-placeholder-img flex-shrink-0 me-2 rounded">
+                <i class='bx bxl-dropbox text-light rounded' style="font-size: 32px; margin-right: 5px; background-color: {{fill_colour_list|random_choice}};"></i>
+            </div>
+            <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                <div class="d-flex justify-content-between">
+                    <strong class="text-gray-dark">@No Confessions Made</strong>
+                </div>
+                <span class="d-block">No confessions has been made till now! So why don't you make one!</span>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+</main>
+{% endblock %}

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 
@@ -16,3 +17,11 @@ class Settings(models.Model):
 
     class Meta:
         verbose_name_plural = "Settings"
+
+
+class Confession(models.Model):
+    date = models.DateTimeField(_('Date when this confession was added!'), default=timezone.now)
+    confession = models.TextField(_('Confession'),null=True,blank=True)
+
+    def __str__(self):
+        return 'Confession ' + self.id + ' ' + self.date

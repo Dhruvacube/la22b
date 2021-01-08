@@ -9,6 +9,7 @@ from django.utils import timezone
 from student.models import Student
 
 from .models import *
+from .templatetags import random_choice_module
 
 total_students = lambda: Student.objects.count()
 
@@ -17,6 +18,9 @@ def date_start_end():
     a = get_object_or_404(Settings)
     return True if a.vote_nicknameassigntime_start > timezone.now() or a.vote_nicknameassigntime < timezone.now() else False
 
+#To return the count of total confessions
+total_confession = lambda : Confession.objects.count()
+
 # Create your views here.
 @login_required
 def user_logout(request):
@@ -24,12 +28,46 @@ def user_logout(request):
     messages.success(request, "You have been successfully logged out!")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
 def home(request):
     return render(
         request,
         'cover.html',
         {
-        'cover_body': Settings.objects.values('about_entry').get()['about_entry'], 
+            'cover_body': Settings.objects.values('about_entry').get()['about_entry'], 
+        }
+    )
+
+
+def confession(request):
+    confession_model = Confession.objects.order_by('?').all()[:10]
+    return render(
+        request,
+        'fun_games/confession/confession.html',
+        {
+            'total_students':total_students,
+            'confession_model': confession_model,
+            'view_more': True if confession_model.count() == 10 else False,
+            'fill_colour_list': ['#6f42c1','#e83e8c', '#007bff'],
+            'total_confession': total_confession,
+            'display_footer': False if total_confession() else True,
+            'display_404': False if total_confession() else True,
+        }
+    )
+
+
+def confession_more(request):
+    confession_model = Confession.objects.order_by('?').all()
+    if not total_confession(): return redirect(reverse('Confession'))
+    return render(
+        request,
+        'fun_games/confession/confession.html',
+        {
+            'total_students':total_students,
+            'confession_model': confession_model,
+            'view_more': False,
+            'fill_colour_list': ['#6f42c1','#e83e8c', '#007bff'],
+            'total_confession': total_confession,
         }
     )
 
