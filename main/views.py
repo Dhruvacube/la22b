@@ -55,7 +55,7 @@ def partner_result(request):
         slug = request.POST['name']
         if slug == 'Select Your Name':
             messages.error(request, "Please select your name from the list !")
-            return redirect(reverse('Partner Finder Result'))
+            return redirect(reverse('Partner Finder'))
         
         student_obj = get_object_or_404(Student, slug=slug)
         gender = "m" if student_obj.gender == "f" else "f" 
@@ -72,7 +72,7 @@ def partner_result(request):
                 'message_conxt': 'Matching',
             }
         )
-    else: return redirect(reverse('Partner Finder Result'))
+    else: return redirect(reverse('Partner Finder'))
 
 
 def animeChar(request):
