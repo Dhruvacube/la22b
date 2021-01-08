@@ -34,6 +34,47 @@ def home(request):
     )
 
 
+def partner(request):
+    return render(
+        request,
+        'fun_games/anime_char/anime-char.html',
+        {
+            'total_students':total_students,
+            'student_objects': Student.objects.values('name','slug','class_stu').all(),
+            'randomAnimeChar': randomAnimeChar(),
+            'backgroundAnime': randomAnimeChar(),
+            'msg_context': 'Find your partner !',
+            'btn_name': 'Find',
+            'form_submit_url': reverse('Partner Finder Result'),
+        }
+    )
+
+
+def partner_result(request):
+    if request.method == "POST":
+        slug = request.POST['name']
+        if slug == 'Select Your Name':
+            messages.error(request, "Please select your name from the list !")
+            return redirect(reverse('Partner Finder Result'))
+        
+        student_obj = get_object_or_404(Student, slug=slug)
+        gender = "m" if student_obj.gender == "f" else "f" 
+        partner_obj = Student.objects.filter(gender=gender).order_by('?').first()
+
+        return render(
+            request,
+            'fun_games/partner_finder/partner-result.html',
+            {
+                'student_model': student_obj,
+                'partner_obj': partner_obj,
+                'backgroundAnime': randomAnimeChar(),
+                'total_students':total_students,
+                'message_conxt': 'Matching',
+            }
+        )
+    else: return redirect(reverse('Partner Finder Result'))
+
+
 def animeChar(request):
     return render(
         request,
@@ -53,6 +94,10 @@ def animeChar(request):
 def animeCharResult(request):
     if request.method == "POST":
         slug = request.POST['name']
+        if slug == 'Select Your Name':
+            messages.error(request, "Please select your name from the list !")
+            return redirect(reverse('Which Anime Character are you?'))
+        
         student_obj = get_object_or_404(Student, slug=slug)
         random_anime_char = randomAnimeChar(namelist=(student_obj.gender, student_obj.name))
         return render(

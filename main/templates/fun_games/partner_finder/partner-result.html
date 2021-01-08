@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}{% load static %}{% block body %}
+<link href="{% static 'css/student.css' %}" rel="stylesheet">
+<script>
+    //Checking loader js in jquery
+    var timeoutset;
+    $('body').css("background-image", "none");
+    $('body').addClass("bg-dark");
+    timeoutset = setTimeout(function() {
+        $('body').css("background-image", "url('{% static backgroundAnime %}')");
+        $('#loaderpseudo').remove();
+        $('#result').removeClass("invisible");
+        clearTimeout(timeoutset);
+    }, 4000)
+</script>
+
+
+<!-- Pseudo Loader -->
+<div class="container" id="loaderpseudo">
+    <div class="d-flex justify-content-center" style="margin-top: 10%;">
+        <span class="spinner-grow text-light" style="width: 100px; height: 100px;" role="status"></span>
+    </div>
+    <h3 class="text-light text-center mt-1">{{message_conxt|title}} ....</h3>
+</div>
+
+<!-- Results -->
+<div id="result" class="container emp-profile invisible border border-danger" style="height: auto; min-height:0; margin-top: 5%;">
+    <div class="row g-2 text-center mb-2 border border-primary rounded">
+        <h4><strong class="text-primary">{{student_model.name}}</strong> your partner maybe <strong class="text-success">{{partner_obj.name}}</strong></h4>
+    </div>
+    <div class="row g-2">
+        <!-- Profile Photo -->
+        <div class="col-md-4">
+            <div class="profile-img">
+                <img src="{{student_model.profile_pic.url}}" alt="Photo of {{student_model.name}}" style="border-radius: 5%; width: 100%; height: 200px;" />
+                <strong><span>{{student_model.name}} · {{student_model.class_stu}}</span></strong>
+            </div>
+        </div>
+        <div id="mt-5" class="col-md-4 text-center" style="font-size: 100px;"><i class='bx bxs-heart bx-burst text-danger'></i></div>
+
+        <div class="col-md-4 text-center">
+            <div class="profile-img">
+                <img src="{{partner_obj.profile_pic.url}}" alt="Photo of {{partner_obj.name}}" style="border-radius: 5%; width: 100%; height: 200px;" />
+                <br/><strong><span>{{partner_obj.name}} · {{partner_obj.class_stu}}</span></strong>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
