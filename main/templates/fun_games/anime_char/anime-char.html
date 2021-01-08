@@ -24,10 +24,10 @@
         <div class="col-md-6 mt-4">
             <div class="profile-head" style="padding: 0%;">
                 <h3>
-                    Which Anime Character are you ?
+                    {{msg_context}}
                 </h3>
                 <!-- Form of name submit -->
-                <form id="form" class="row g-3" method="post" action="{% url 'Which Anime Character are you Results' %}">{% csrf_token %}
+                <form id="form" class="row g-3" method="post" action="{{form_submit_url}}">{% csrf_token %}
 
                     <div class="col-auto">
                         <select class="form-select form-select-lg mb-3" name="name" required>
@@ -38,15 +38,8 @@
                         </select>
                     </div>
                     <div id="submitbutton" class="col-auto">
-                        <button type="submit" class="btn btn-primary mb-3">Check</button>
+                        <button type="submit" class="btn btn-primary mb-3">{{btn_name}}</button>
                     </div>
-                    <div id="spinner" class="col-auto invisible">
-                        <button class="btn btn-primary" type="button" disabled>
-                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                            Loading...
-                        </button>
-                    </div>
-
                 </form>
             </div>
         </div>

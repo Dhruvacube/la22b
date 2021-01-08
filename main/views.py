@@ -43,6 +43,9 @@ def animeChar(request):
             'student_objects': Student.objects.values('name','slug','class_stu').all(),
             'randomAnimeChar': randomAnimeChar(),
             'backgroundAnime': randomAnimeChar(),
+            'msg_context': 'Which Anime Character are you ?',
+            'btn_name': 'Check',
+            'form_submit_url': reverse('Which Anime Character are you Results'),
         }
     )
 
