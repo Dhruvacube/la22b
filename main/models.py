@@ -21,7 +21,7 @@ class Settings(models.Model):
 
 class Confession(models.Model):
     date = models.DateTimeField(_('Date when this confession was added!'), default=timezone.now)
-    confession = models.TextField(_('Confession'),null=True,blank=True)
+    confession = models.TextField(_('Confession'))
 
     def __str__(self):
-        return 'Confession ' + self.id + ' ' + self.date
+        return 'Confession ' + str(self.id) + ' ' + str(self.date)

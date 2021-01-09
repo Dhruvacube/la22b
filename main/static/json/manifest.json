@@ -2,12 +2,12 @@
     "name": "Landmark of APS 2020",
     "short_name": "LA22B",
     "icons": [{
-            "src": "logo.png",
+            "src": "static/img/logo.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "logo.png",
+            "src": "static/img/logo.png",
             "sizes": "512x512",
             "type": "image/png"
         }

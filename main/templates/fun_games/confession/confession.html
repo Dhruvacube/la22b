@@ -6,6 +6,8 @@
         background-size: cover;
     }
 </style>
+<script src="{% static 'js/confession_submit.js' %}"></script>
+
 <main class="container">
     <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
         <img class="me-3" src="{% static 'img/logo.png' %}" alt="Logo" width="48" height="48">
@@ -21,22 +23,26 @@
             </div>
             <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                 <div class="justify-content-between">
-                    <form class="row">
+
+                    <!-- Confession Form -->
+                    <form class="row" id="confessionform" method="post" action="{% url 'Confession Store' %}">{% csrf_token %}
                         <div class="col-9">
-                            <label for="confession" class="visually-hidden">Confession</label>
-                            <input type="text" class="form-control" name="confession" placeholder="Type your confession ...">
+                            {% for field in form %}{{field}}{% for error in field.errors %}
+                            <small class="text-danger"><strong>{{ error }}</strong></small> {% endfor %}{% endfor %}
+                            <small id="warning_confession" class="text-danger d-none"><strong>* Please enter a confession to store or <br/>* Please not keep the confessions only with special characters!</strong></small>
                         </div>
                         <div class="col-auto">
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-primary mb-3"><i class='bx bxs-send bx-tada bx-rotate-270' ></i></button>
+                            <button type="button" data-bs-target="#confirmationmodal" class="btn btn-primary mb-3" onclick="show_confirmation_form()"><i class='bx bxs-send bx-tada bx-rotate-270 ' ></i></button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Confirmation Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmationmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -48,7 +54,19 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">X</button>
-                    <button type="button" class="btn btn-primary"><i class='bx bxs-send bx-tada bx-rotate-270' ></i></button>
+                    <button type="button" onclick="form_submit()" class="btn btn-primary"><i class='bx bxs-send bx-tada bx-rotate-270 ' ></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div class="modal fade" id="loadingmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="font-size: 20px;">
+                <div class="modal-body bg-dark rounded text-light">
+                    <span class="spinner-border" style="width: 32px; height: 32px; margin-left: 45%; margin-right: 50%;" role="status"></span><br/>
+                    <span style="margin-left: 4%;"><i class='bx bxs-lock-alt bx-tada '></i> Securely storing <i class='bx bx-message-square-edit bx-flashing '></i> the confession in the <i class='bx bxl-dropbox bx-burst '></i> ! </span>
                 </div>
             </div>
         </div>
@@ -56,21 +74,21 @@
 
     <div class="my-3 p-3 bg-white rounded shadow-sm">
 
-        {% for j in confession_list %}
+        {% for j in confession_model %}
         <div class="d-flex text-muted pt-3">
             <div class="bd-placeholder-img flex-shrink-0 me-2 rounded">
-                <i class='bx bxl-dropbox text-light rounded' style="font-size: 32px; margin-right: 5px; background-color: {{fill_colour_list|random_choice}};"></i>
+                <i class='bx bxl-dropbox text-light rounded ' style="font-size: 32px; margin-right: 5px; background-color: {{fill_colour_list|random_choice}};"></i>
             </div>
             <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                 <div class="d-flex justify-content-between">
-                    <strong class="text-gray-dark">{{j.date|naturaltime}}</strong>
+                    <strong class="text-gray-dark">{{j.date|naturaltime|title}}</strong>
                 </div>
-                <span class="d-block">{{confession}}</span>
+                <span class="d-block">{{j.confession}}</span>
             </div>
         </div>
         {% endfor %} {% if view_more %}
         <small class="d-block text-end mt-3">
-            <a href="{% url 'Confession More' %}" class="btn btn-outline-primary">See More...</a>
+            <a href="{% url 'Confession More ' %}" class="btn btn-outline-primary">See More...</a>
         </small>{% endif %}
 
 
@@ -78,7 +96,7 @@
         {% if display_404 %}
         <div class="d-flex text-muted pt-3">
             <div class="bd-placeholder-img flex-shrink-0 me-2 rounded">
-                <i class='bx bxl-dropbox text-light rounded' style="font-size: 32px; margin-right: 5px; background-color: {{fill_colour_list|random_choice}};"></i>
+                <i class='bx bxl-dropbox text-light rounded ' style="font-size: 32px; margin-right: 5px; background-color: {{fill_colour_list|random_choice}};"></i>
             </div>
             <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                 <div class="d-flex justify-content-between">

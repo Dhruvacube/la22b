@@ -10,6 +10,7 @@ from student.models import Student
 
 from .models import *
 from .templatetags import random_choice_module
+from .forms import *
 
 total_students = lambda: Student.objects.count()
 
@@ -52,6 +53,7 @@ def confession(request):
             'total_confession': total_confession,
             'display_footer': False if total_confession() else True,
             'display_404': False if total_confession() else True,
+            'form' : ConfessionForm(),
         }
     )
 
@@ -68,9 +70,21 @@ def confession_more(request):
             'view_more': False,
             'fill_colour_list': ['#6f42c1','#e83e8c', '#007bff'],
             'total_confession': total_confession,
+            'form' : ConfessionForm(),
         }
     )
 
+
+def confession_store(request):
+    if request.method == 'POST':
+        form = ConfessionForm(request.POST)
+        if form.is_valid():
+           form.save()
+           return redirect(request.META.get('HTTP_REFERER'))
+        else:
+            messages.error(request,'Please do not keep the confessions blank or with only special characters!')
+            return redirect(request.META.get('HTTP_REFERER'))
+    else: return redirect(reverse('Confession'))
 
 def partner(request):
     return render(

@@ -9,10 +9,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     path('', views.home, name="Cover Page"),
+
     path('confession/', views.confession, name="Confession"),
     path('confession_more/', views.confession_more, name="Confession More"),
+    path('confession_store/', views.confession_store, name="Confession Store"),
+
     path('partner-finder/', views.partner, name="Partner Finder"),
     path('partner-finder-result/', views.partner_result, name="Partner Finder Result"),
+
     path('anime-characters-are-you/', views.animeChar, name="Which Anime Character are you?"),
     path('anime-characters-are-you-result/', views.animeCharResult, name="Which Anime Character are you Results"),
     
