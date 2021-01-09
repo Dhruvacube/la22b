@@ -6,6 +6,35 @@
         background-size: cover;
     }
 </style>
+<script>
+    //Set the date we're counting down to
+    var countDownDate = new Date('{{get_date}}').getTime();
+    // Update the count down every 1 second
+    var countdownfunction_start = setInterval(function() {
+        // Get todays date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now an the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Output the result in an element with id="demo"
+        document.getElementById("date_write").innerHTML = days + "d " + hours + "h " +
+            minutes + "m " + seconds + "s ";
+
+        // If the count down is over, write some text 
+        if (distance < 0) {
+            clearInterval(countdownfunction);
+            document.getElementById("date_write").innerHTML = "ENDED";
+        }
+    }, 1000);
+</script>
+
 <script src="{% static 'js/confession_submit.js' %}"></script>
 
 <main class="container">
@@ -13,16 +42,29 @@
         <img class="me-3" src="{% static 'img/logo.png' %}" alt="Logo" width="48" height="48">
         <div class="lh-1">
             <small>Total Confessions : {{total_confession|intcomma}}</small>
-        </div>s
+        </div>
     </div>
+
+    <div class="p-2 pl-3 bg-white rounded shadow-sm">
+        <div class="d-flex text-muted pt-3">
+            <div class="bd-placeholder-img flex-shrink-0 me-2 rounded">
+                <i class='bx bxl-dropbox text-light rounded ' style="font-size: 20px; margin-right: 5px; background-color: {{fill_colour_list|random_choice}};"></i>
+            </div>
+            <div class="pb-2 mb-0 small lh-sm border-bottom w-100">
+                {% ifequal starts_end 'start' %}opens in{% else %}opened till{% endifequal %}
+                <span class="badge bg-light text-dark rounded-pill align-text-bottom" id="date_write"></span>
+            </div>
+        </div>       
+    </div>        
+
 
     <div class="my-3 p-3 bg-white rounded shadow-sm">
 
-        <div class="d-flex text-muted pt-3">
+        <div class="d-flex text-muted pt-2">
             <div class="bd-placeholder-img flex-shrink-0 me-2 rounded">
                 <i class='bx bxl-dropbox text-light rounded' style="font-size: 32px; margin-right: 5px; background-color: {{fill_colour_list|random_choice}};"></i>
             </div>
-            <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+            <div class="pb-1 mb-0 small lh-sm border-bottom w-100">
                 <div class="justify-content-between">
 
                     <!-- Confession Form -->
@@ -33,7 +75,7 @@
                             <small id="warning_confession" class="text-danger d-none"><strong>* Please enter a confession to store or <br/>* Please not keep the confessions only with special characters!</strong></small>
                         </div>
                         <div class="col-auto">
-                            <button type="button" data-bs-target="#confirmationmodal" class="btn btn-primary mb-3" onclick="show_confirmation_form()"><i class='bx bxs-send bx-tada bx-rotate-270 ' ></i></button>
+                            <button type="button" data-bs-target="#confirmationmodal" class="btn btn-primary mb-3" {% if date_start_end %}disabled{% endif %} onclick="show_confirmation_form()"><i class='bx bxs-send bx-tada bx-rotate-270 ' ></i></button>
                         </div>
                     </form>
 
@@ -76,7 +118,7 @@
     <div class="my-3 p-3 bg-white rounded shadow-sm">
 
         {% for j in confession_model %}
-        <div class="d-flex text-muted pt-3">
+        <div class="d-flex text-muted pt-2">
             <div class="bd-placeholder-img flex-shrink-0 me-2 rounded">
                 <i class='bx bxl-dropbox text-light rounded ' style="font-size: 32px; margin-right: 5px; background-color: {{fill_colour_list|random_choice}};"></i>
             </div>
@@ -95,7 +137,7 @@
 
         <!-- when no confessions -->
         {% if display_404 %}
-        <div class="d-flex text-muted pt-3">
+        <div class="d-flex text-muted pt-2">
             <div class="bd-placeholder-img flex-shrink-0 me-2 rounded">
                 <i class='bx bxl-dropbox text-light rounded ' style="font-size: 32px; margin-right: 5px; background-color: {{fill_colour_list|random_choice}};"></i>
             </div>

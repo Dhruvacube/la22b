@@ -65,6 +65,7 @@ def confession(request):
             'form' : ConfessionForm(),
             'starts_end': get_respect_date()[1],
             'get_date': str(get_respect_date()[0].strftime("%b %d, %Y %X")),
+            'date_start_end': date_start_end(),
         }
     )
 
@@ -84,6 +85,7 @@ def confession_more(request):
             'form' : ConfessionForm(),
             'starts_end': get_respect_date()[1],
             'get_date': str(get_respect_date()[0].strftime("%b %d, %Y %X")),
+            'date_start_end': date_start_end(),
         }
     )
 
