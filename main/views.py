@@ -72,7 +72,9 @@ def confession(request):
 
 def confession_more(request):
     confession_model = Confession.objects.order_by('?').all()
-    if confession_model[:10].count() <= 10 : return redirect(reverse('Confession'))
+    print(confession_model[:10].count())
+    if int(confession_model[:10].count()) < 10: 
+        return redirect(reverse('Confession'))
     return render(
         request,
         'fun_games/confession/confession.html',
