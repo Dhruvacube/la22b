@@ -50,7 +50,68 @@ class TitlesAdmin(admin.ModelAdmin):
         ) % updated, messages.SUCCESS)
     change_all.short_description = "Set Gender To All"
 
-    actions = ['change_male','change_female', 'change_all']
+    ####CLASS
+    #sc-1
+    def change_sc_1(self, request, queryset):
+        updated = queryset.update(title_stu='SC-1')
+        self.message_user(request, ngettext(
+            '%d title was set to SC-1.',
+            '%d titles were set to SC-1.',
+            updated,
+        ) % updated, messages.SUCCESS)
+    change_sc_1.short_description = "Set class to SC-1"
+
+    #sc-2
+    def change_sc_2(self, request, queryset):
+        updated = queryset.update(title_stu='SC-2')
+        self.message_user(request, ngettext(
+            '%d title was set to SC-2.',
+            '%d titles were set to SC-2.',
+            updated,
+        ) % updated, messages.SUCCESS)
+    change_sc_2.short_description = "Set class to SC-2"
+
+    #sc3
+    def change_sc_3(self, request, queryset):
+        updated = queryset.update(title_stu='SC-3')
+        self.message_user(request, ngettext(
+            '%d title was set to SC-3.',
+            '%d titles were set to SC-3.',
+            updated,
+        ) % updated, messages.SUCCESS)
+    change_sc_3.short_description = "Set class to SC-3"
+
+    #commerce
+    def change_commerce(self, request, queryset):
+        updated = queryset.update(title_stu='COMMERCE')
+        self.message_user(request, ngettext(
+            '%d title was set to COMMERCE.',
+            '%d titles were set to COMMERCE.',
+            updated,
+        ) % updated, messages.SUCCESS)
+    change_commerce.short_description = "Set class to COMMERCE"
+
+    #arts
+    def change_arts(self, request, queryset):
+        updated = queryset.update(title_stu='ARTS')
+        self.message_user(request, ngettext(
+            '%d title was set to ARTS.',
+            '%d titles were set to ARTS.',
+            updated,
+        ) % updated, messages.SUCCESS)
+    change_arts.short_description = "Set class to ARTS"
+
+    #all
+    def change_all_class(self, request, queryset):
+        updated = queryset.update(title_stu='ALL')
+        self.message_user(request, ngettext(
+            '%d title was successfully set for all classes.',
+            '%d titles were successfully set for all classes.',
+            updated,
+        ) % updated, messages.SUCCESS)
+    change_all_class.short_description = "Set class to ALL"
+
+    actions = ['change_male','change_female', 'change_all', 'change_sc_1', 'change_sc_2', 'change_sc_3', 'change_commerce', 'change_arts', 'change_all_class']
 
 class ParticipantAdmin(admin.ModelAdmin):
     search_fields = list_display = list_filter = ('student','title_part') 
