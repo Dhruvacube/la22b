@@ -26,7 +26,6 @@ def title_entry(request):
     )
 
 def vote(request,slug):
-    print(get_respect_date()[0].now())
     title_model = get_object_or_404(Titles,slug=slug)
     if title_model.title_stu == 'ALL' and title_model.gender == 'ALL':
         student_model = Student.objects.filter().values('name','slug',).all()
