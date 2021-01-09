@@ -60,7 +60,7 @@ def confession(request):
 
 def confession_more(request):
     confession_model = Confession.objects.order_by('?').all()
-    if not total_confession(): return redirect(reverse('Confession'))
+    if confession_model[:10].count() <= 10 : return redirect(reverse('Confession'))
     return render(
         request,
         'fun_games/confession/confession.html',
@@ -80,6 +80,7 @@ def confession_store(request):
         form = ConfessionForm(request.POST)
         if form.is_valid():
            form.save()
+           messages.success(request, 'Confession successfully stored!')
            return redirect(request.META.get('HTTP_REFERER'))
         else:
             messages.error(request,'Please do not keep the confessions blank or with only special characters!')
