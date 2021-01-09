@@ -19,6 +19,15 @@ def date_start_end():
     a = get_object_or_404(Settings)
     return True if a.vote_nicknameassigntime_start > timezone.now() or a.vote_nicknameassigntime < timezone.now() else False
 
+def get_respect_date():
+    a = get_object_or_404(Settings)
+    if a.vote_nicknameassigntime_start > timezone.now():
+        return (a.vote_nicknameassigntime_start, 'start')
+    elif a.vote_nicknameassigntime < timezone.now():
+        return (a.vote_nicknameassigntime,'ends')
+    else:
+        return (a.vote_nicknameassigntime,'ends')
+
 #To return the count of total confessions
 total_confession = lambda : Confession.objects.count()
 
@@ -54,6 +63,8 @@ def confession(request):
             'display_footer': False if total_confession() else True,
             'display_404': False if total_confession() else True,
             'form' : ConfessionForm(),
+            'starts_end': get_respect_date()[1],
+            'get_date': str(get_respect_date()[0].strftime("%b %d, %Y %X")),
         }
     )
 
@@ -71,6 +82,8 @@ def confession_more(request):
             'fill_colour_list': ['#6f42c1','#e83e8c', '#007bff'],
             'total_confession': total_confession,
             'form' : ConfessionForm(),
+            'starts_end': get_respect_date()[1],
+            'get_date': str(get_respect_date()[0].strftime("%b %d, %Y %X")),
         }
     )
 

@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from main.models import *
-from main.views import date_start_end
+from main.views import date_start_end, get_respect_date
 from titles.models import *
 
 from .models import *
@@ -72,6 +72,8 @@ def student(request, slug):
             'total_students':total_students,
             'profile_stu': True,
             'date_start_end': date_start_end,
+            'starts_end': get_respect_date()[1],
+            'get_date': str(get_respect_date()[0].strftime("%b %d, %Y %X")),
         }
     )
 

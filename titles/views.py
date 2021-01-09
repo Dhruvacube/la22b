@@ -3,9 +3,10 @@ from django.db.models import F
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from main.models import *
-from main.views import date_start_end
+from main.views import date_start_end, get_respect_date
 from student.models import *
 from student.views import total_students
+from student.templatetags import extras
 
 from .models import *
 
@@ -25,6 +26,7 @@ def title_entry(request):
     )
 
 def vote(request,slug):
+    print(get_respect_date()[0].now())
     title_model = get_object_or_404(Titles,slug=slug)
     if title_model.title_stu == 'ALL' and title_model.gender == 'ALL':
         student_model = Student.objects.filter().values('name','slug',).all()
@@ -48,6 +50,8 @@ def vote(request,slug):
             'total_students': total_students,
             'participants_model_ten':Participants.objects.filter(title_part=title_model).order_by('-stu_vote').all()[:10],
             'date_start_end':date_start_end,
+            'starts_end': get_respect_date()[1],
+            'get_date': str(get_respect_date()[0].strftime("%b %d, %Y %X")),
         }
     )
 
