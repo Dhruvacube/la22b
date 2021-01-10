@@ -106,7 +106,7 @@
                             <form class="row g-2" method="post" action="{% url 'Add Nickname' slug=slug %}">{% csrf_token %}
                                 <div class="col-8">
                                     <label for="nickname" class="visually-hidden">Type the nickname you want to give</label>
-                                    <input class="form-control" autocomplete="off" name="nickname" list="datalistOptions" placeholder="Type the nickname you want to give" {% if date_start_end %}disabled{% endif %}>
+                                    <input required maxlength="100" class="form-control" autocomplete="off" name="nickname" list="datalistOptions" placeholder="Type the nickname you want to give" {% if date_start_end %}disabled{% endif %}>
                                     <datalist id="datalistOptions">
                                         {% for i in data %}
                                         <option value="{{i|get_val:0}}">

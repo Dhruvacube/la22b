@@ -49,6 +49,16 @@ def home(request):
     )
 
 
+def faq(request):
+    return render(
+        request,
+        'faq.html',
+        {
+            'total_students':total_students,
+        }
+    )
+
+
 def confession(request):
     confession_model = Confession.objects.order_by('?').all()[:10]
     return render(

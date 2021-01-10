@@ -10,6 +10,8 @@ urlpatterns = [
     
     path('', views.home, name="Cover Page"),
 
+    path('faq/', views.faq, name="FAQ"),
+
     path('confession/', views.confession, name="Confession"),
     path('confession_more/', views.confession_more, name="Confession More"),
     path('confession_store/', views.confession_store, name="Confession Store"),
