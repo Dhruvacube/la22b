@@ -9,18 +9,17 @@ from django.utils import timezone
 from student.models import Student
 
 from .models import *
-from .templatetags import random_choice_module
 from .forms import *
 
 total_students = lambda: Student.objects.count()
 
 #A simpple function to get if the voting timing has begun or ends 
 def date_start_end():
-    a = get_object_or_404(Settings)
+    a = Settings.objects.get_or_create()[0]
     return True if a.vote_nicknameassigntime_start > timezone.now() or a.vote_nicknameassigntime < timezone.now() else False
 
 def get_respect_date():
-    a = get_object_or_404(Settings)
+    a = Settings.objects.get_or_create()[0]
     if a.vote_nicknameassigntime_start > timezone.now():
         return (a.vote_nicknameassigntime_start, 'start')
     elif a.vote_nicknameassigntime < timezone.now():
@@ -44,20 +43,46 @@ def home(request):
         request,
         'cover.html',
         {
-            'cover_body': Settings.objects.values('about_entry').get()['about_entry'], 
+            'cover_body': Settings.objects.values('about_entry').get_or_create()[0]['about_entry'], 
         }
     )
 
 
 def faq(request):
+    form = ContactForm()
+    remove_form = RemoveProfileForm()
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+           form.save()
+           messages.success(request, 'Query successfully submitted')
+        else:
+            messages.error(request,'Please correct the errors the below')
     return render(
         request,
         'faq.html',
         {
             'total_students':total_students,
+            'settings': Settings.objects.get_or_create()[0],
+            'form': form,
+            'remove_form': remove_form,
         }
     )
 
+def remove_name_api(request):
+    if request.method == "POST":
+        form = RemoveProfileForm(request.POST)
+        if form.is_valid():
+           form.save()
+           messages.warning(request, 'Your name has been added to removal list.')
+           return redirect(reverse('FAQ'))
+        else:
+            if form.errors.as_data().get('student_models'):
+                messages.warning(request,'Your name is already there in the removal list.')
+            else: 
+                messages.error(request,'Please correct the errors the below')
+            return redirect(request.META.get('HTTP_REFERER'))
+    else: return redirect(reverse('FAQ'))
 
 def confession(request):
     confession_model = Confession.objects.order_by('?').all()[:10]
@@ -82,7 +107,6 @@ def confession(request):
 
 def confession_more(request):
     confession_model = Confession.objects.order_by('?').all()
-    print(confession_model[:10].count())
     if int(confession_model[:10].count()) < 10: 
         return redirect(reverse('Confession'))
     return render(

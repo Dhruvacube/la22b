@@ -23,6 +23,15 @@ try:
     def send_queued_mail(num):
         """Send queued mail every 10 seconds"""
         call_command('send_queued_mail', processes=1)
+        call_command('remove_stale_queries')
+    
+    @uwsgidecorators.timer(10)
+    def remove_stale_queries(num):
+        call_command('remove_stale_queries')
+    
+    @uwsgidecorators.timer(86400)
+    def remove_profile(num):
+        call_command('remove_profile')
 
 except ImportError:
     print("uwsgidecorators not found. Cron and timers are disabled")

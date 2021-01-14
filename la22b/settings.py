@@ -1,8 +1,9 @@
+import os
 from pathlib import Path
+
 import dj_database_url
 import dotenv
 from django.contrib.messages import constants as messages
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -142,3 +143,4 @@ if PRODUCTION_SERVER:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     SECURE_REFERRER_POLICY = "same-origin"
+

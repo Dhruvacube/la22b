@@ -11,7 +11,7 @@ from .models import *
 from .templatetags import extras
 
 total_students = lambda: Student.objects.count()
-students_vote_limit = lambda: Settings.objects.values('nickname_limit').get()['nickname_limit']
+students_vote_limit = lambda: Settings.objects.values('nickname_limit').get_or_create()[0]['nickname_limit']
 
 # Create your views here.
 

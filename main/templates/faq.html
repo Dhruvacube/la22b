@@ -1,48 +1,147 @@
 {% extends 'layout.html' %}{% load static %}{% block body %}
+<script src="{% static 'js/faq.js' %}"></script>
+<link href="{% static 'css/faq.css' %}" rel="stylesheet">
+
 <div class="container mt-5">
-    <div class="accordion" id="accordionExample">
+    <div class="accordion bg-white rounded">
+        <!-- One -->
         <div class="accordion-item">
             <h2 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Accordion Item #1
-        </button>
+                <button class="accordion-button text-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <span class="text-dark">1#</span> &nbsp;<strong>How to add your name in list ?</strong>
+                </button>
             </h2>
             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <strong>This is the first item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the
-                    showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition
-                    does limit overflow.
+                <div class="accordion-body" id="google-forms">
+                    <strong id="strongele">Your name not here in the list ?</strong> Well you can add your name by submitting your name in this form {{ 'https://forms.gle/M8hkJbjueH3KXgfDA'|urlizetrunc:20 }}
                 </div>
             </div>
         </div>
+
+        <!-- Two -->
         <div class="accordion-item">
             <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Accordion Item #2
-        </button>
+                <button class="accordion-button collapsed text-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <span class="text-dark">2#</span> &nbsp; <strong>How do I remove my profile ?</strong>
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse show collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <h5>You can remove your name submitting your name to this form. Your name will be removed automatically after <b class=text-danger>24hrs</b> after submitting</h5>
+                    <form id="removenameform" action="{% url 'Remove Name API' %}" method="post" class="row row-cols-lg-auto g-3 align-items-center">{% csrf_token %}
+                        <div class="col-md-6">{% for field in remove_form %}{{field}}{% for error in field.errors %}
+                            <br/><small class="text-danger"><strong>{{ error }}</strong></small> {% endfor %}{% endfor %}<br/>
+                            <small id="nonewarning" class="text-danger d-none">Please select your name</small>
+                        </div>
+                        <div class="col-12">
+                            <button type="button" class="btn btn-danger" onclick="show_confirmation_form()">Proceed</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="container mt-5">
+    <div class="accordion bg-white rounded">
+        <!-- Two -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed text-info" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <span class="text-dark">3#</span> &nbsp; <strong>What is the duration for the voting and giving nicknames ?</strong>
+                </button>
             </h2>
             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                    <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as
-                    the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the
-                    transition does limit overflow.
+                    <strong>For both the duration is.</strong> from <strong class="text-success">{{settings.vote_nicknameassigntime_start}}</strong> to <strong class="text-danger">{{settings.vote_nicknameassigntime}}</strong><br/>
                 </div>
             </div>
         </div>
+        <!-- Pesudo Two -->
         <div class="accordion-item">
             <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Accordion Item #3
-        </button>
+                <button class="accordion-button collapsed text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    4# &nbsp; <strong>How times a day one can vote or give nicknames ?</strong>
+                </button>
             </h2>
-            <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                    <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the
-                    showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition
-                    does limit overflow.
+                    For <strong>voting titles</strong> the limit is. <strong class="text-success">{{settings.title_limit}} times</strong> a day to per person<br/> For <strong>nickname</strong> the limit is. <strong class="text-success">{{settings.nickname_limit}} times</strong>                    a day per person
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="container mt-5">
+    <div class="accordion bg-white rounded">
+        <!-- Three -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed text-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                    4# &nbsp;<strong>How to contact us ?</strong>
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <h5 class="container mb-5">Well you can contact us by submitting your query through this form</h5>
+
+                    <!-- Contact Form -->
+                    <form class="container row g-3 align-items-center" method="post" action="{% url 'FAQ' %}">{% csrf_token %} {% for field in form %}
+                        <div class="{% if forloop.counter <= 2 %}col-md-6{% else %}col-12{% endif %} ">
+                            {% if forloop.counter == 2 %}
+                            <div class="input-group">
+                                <div class="input-group-text">@</div>{% endif %} {% if not forloop.counter == 2 %}{{field.label_tag}}{% endif %} {{field}}{% for error in field.errors %}
+                                <br/> <small class="text-danger"><strong>{{ error }}</strong></small> {% endfor %} {% if forloop.counter == 2 %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary mb-3">Submit Query</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal --->
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmationmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-success">Are you sure ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure that you want to remove your profile ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">X</button>
+                <button type="button" onclick="form_submit()" class="btn btn-primary"><i class='bx bx-chevron-right-circle bx-tada' ></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Modal -->
+<div class="modal fade" id="loadingmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="font-size: 20px;">
+            <div class="modal-body bg-dark rounded text-light">
+                <span class="spinner-border" style="width: 32px; height: 32px; margin-left: 45%; margin-right: 50%;" role="status"></span><br/> Don't exit and we will remove your profile within 24 hrs after verifications.
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

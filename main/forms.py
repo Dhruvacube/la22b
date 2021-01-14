@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from django import forms
 
 from .models import *
 
@@ -24,3 +25,34 @@ class ConfessionForm(ModelForm):
         self.fields['confession'].widget.attrs["required"] = "true"
         self.fields['confession'].widget.attrs["rows"] = "1"
         self.fields['confession'].widget.attrs["disabled"] = date_start_end()
+
+class ContactForm(ModelForm):
+    class Meta:
+        model = Contact
+        fields = ['name','instagram_id','email','subject','message']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['name'].widget.attrs["class"] = "form-control form-select"
+        self.fields['instagram_id'].widget.attrs["class"] = "form-control"
+        self.fields['subject'].widget.attrs["class"] = "form-control"
+        self.fields['message'].widget.attrs["class"] = "form-control"
+        self.fields['email'].widget.attrs["class"] = "form-control"
+
+        self.fields['instagram_id'].widget.attrs["placeholder"] = "Instagram Username (Optional)"
+        self.fields['email'].widget.attrs["placeholder"] = "your_email_address@service-provider.com   (Optional)"
+        self.fields['subject'].widget.attrs["placeholder"] = "Subject Heading"
+        self.fields['message'].widget.attrs["placeholder"] = "Your Message ....."
+
+
+class RemoveProfileForm(ModelForm):
+    class Meta:
+        model = RemoveName
+        fields = ['student_models',]
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['student_models'].widget.attrs["class"] = "form-control form-select"
+        self.fields['student_models'].widget.attrs["style"] = "width:300px"

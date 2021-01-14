@@ -11,6 +11,7 @@ urlpatterns = [
     path('', views.home, name="Cover Page"),
 
     path('faq/', views.faq, name="FAQ"),
+    path('remove_name_api/', views.remove_name_api, name="Remove Name API"),
 
     path('confession/', views.confession, name="Confession"),
     path('confession_more/', views.confession_more, name="Confession More"),

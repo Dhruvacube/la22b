@@ -1,4 +1,4 @@
-{% extends 'layout.html' %} {% load static %}{% load humanize %}{% load random_choice_module %}{% block body %}
+{% extends 'layout.html' %} {% load static %}{% load humanize %}{% block body %}
 <style>
     body {
         background-image: url('{% static "/img/3.jpeg" %}');
@@ -45,24 +45,24 @@
         </div>
     </div>
 
-    <div class="p-2 pl-3 bg-white rounded shadow-sm">
-        <div class="d-flex text-muted pt-3">
+    <div class="my-3 p-2 bg-white rounded shadow-sm">
+        <div class="d-flex text-muted pt-2">
             <div class="bd-placeholder-img flex-shrink-0 me-2 rounded">
-                <i class='bx bxl-dropbox text-light rounded ' style="font-size: 20px; margin-right: 5px; background-color: {{fill_colour_list|random_choice}};"></i>
+                <i class='bx bxl-dropbox text-light rounded ' style="font-size: 20px; margin-right: 5px; background-color: {{fill_colour_list|random}};"></i>
             </div>
             <div class="pb-2 mb-0 small lh-sm border-bottom w-100">
                 {% ifequal starts_end 'start' %}opens in{% else %}opened till{% endifequal %}
                 <span class="badge bg-light text-dark rounded-pill align-text-bottom" id="date_write"></span>
             </div>
-        </div>       
-    </div>        
+        </div>
+    </div>
 
 
     <div class="my-3 p-3 bg-white rounded shadow-sm">
 
         <div class="d-flex text-muted pt-2">
             <div class="bd-placeholder-img flex-shrink-0 me-2 rounded">
-                <i class='bx bxl-dropbox text-light rounded' style="font-size: 32px; margin-right: 5px; background-color: {{fill_colour_list|random_choice}};"></i>
+                <i class='bx bxl-dropbox text-light rounded' style="font-size: 32px; margin-right: 5px; background-color: {{fill_colour_list|random}};"></i>
             </div>
             <div class="pb-1 mb-0 small lh-sm border-bottom w-100">
                 <div class="justify-content-between">
@@ -120,7 +120,7 @@
         {% for j in confession_model %}
         <div class="d-flex text-muted pt-2">
             <div class="bd-placeholder-img flex-shrink-0 me-2 rounded">
-                <i class='bx bxl-dropbox text-light rounded ' style="font-size: 32px; margin-right: 5px; background-color: {{fill_colour_list|random_choice}};"></i>
+                <i class='bx bxl-dropbox text-light rounded ' style="font-size: 32px; margin-right: 5px; background-color: {{fill_colour_list|random}};"></i>
             </div>
             <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                 <div class="d-flex justify-content-between">
@@ -139,7 +139,7 @@
         {% if display_404 %}
         <div class="d-flex text-muted pt-2">
             <div class="bd-placeholder-img flex-shrink-0 me-2 rounded">
-                <i class='bx bxl-dropbox text-light rounded ' style="font-size: 32px; margin-right: 5px; background-color: {{fill_colour_list|random_choice}};"></i>
+                <i class='bx bxl-dropbox text-light rounded ' style="font-size: 32px; margin-right: 5px; background-color: {{fill_colour_list|random}};"></i>
             </div>
             <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                 <div class="d-flex justify-content-between">

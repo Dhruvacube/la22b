@@ -10,7 +10,7 @@ from student.templatetags import extras
 
 from .models import *
 
-title_vote_limit = lambda: Settings.objects.values('title_limit').get()['title_limit']
+title_vote_limit = lambda: Settings.objects.values('title_limit').get_or_create()[0]['title_limit']
 
 # Create your views here.
 def title_entry(request):
