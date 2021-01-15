@@ -5,7 +5,7 @@
     {% for i in student_model %}
     <div class="col">
         <div class="card border-primary" style="width: 70%; border-radius: 10px;">
-            <img class="card-img-top" style="border-radius: 10px; width: 100%; height: 100%;" src="{{i.profile_pic.url}}">
+            <img class="card-img-top" style="border-radius: 10px; width: 294px; height: 200px;" src="{{i.profile_pic.url}}">
             <div class="card-body">
                 <h5 class="card-title">{{i.name}} · {{i.class_stu}}</h5>
                 <p class="card-text"><a class="nav-link btn btn-outline-primary" href="{% url 'Student Profile' slug=i.slug %}">Visit Profile</a></p>
