@@ -14,7 +14,7 @@ def leaderboard(request):
 
     total_votal = Titles.objects.aggregate(Sum('total_vote'))['total_vote__sum']
     if not total_votal: 
-        messages.info(request,'No voting has been till now. So why don\'t you vote ?')
+        messages.info(request,'No voting has been done till now. So why don\'t you vote ?')
         return redirect(reverse('View Title'))
 
     return render(
