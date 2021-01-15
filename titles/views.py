@@ -28,16 +28,16 @@ def title_entry(request):
 def vote(request,slug):
     title_model = get_object_or_404(Titles,slug=slug)
     if title_model.title_stu == 'ALL' and title_model.gender == 'ALL':
-        student_model = Student.objects.filter().values('name','slug',).all()
+        student_model = Student.objects.filter(hidden=False).values('name','slug',).all()
     
     elif title_model.title_stu == 'ALL':
-        student_model = Student.objects.filter(gender=title_model.gender,).values('name','slug',).all()
+        student_model = Student.objects.filter(hidden=False,gender=title_model.gender,).values('name','slug',).all()
     
     elif title_model.gender == 'ALL':
-        student_model = Student.objects.filter(class_stu=title_model.title_stu).values('name','slug',).all()
+        student_model = Student.objects.filter(hidden=False,class_stu=title_model.title_stu).values('name','slug',).all()
     
     else:
-        student_model = Student.objects.filter(gender=title_model.gender,class_stu=title_model.title_stu).values('name','slug',).all()
+        student_model = Student.objects.filter(hidden=False,gender=title_model.gender,class_stu=title_model.title_stu).values('name','slug',).all()
     return render(
         request,
         'vote.html',

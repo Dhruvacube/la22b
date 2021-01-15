@@ -1,0 +1,15 @@
+{% verbatim %}
+Hello there was a new query that was raised in the website LA22B.
+
+Name : {{name}}
+Email-Address: {{email}}
+Instagram ID: {{insta_id}}
+
+Subject : {{subject}}
+
+Message : {{message}}
+
+
+From,
+    LA22B website
+{% endverbatim %}

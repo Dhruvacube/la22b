@@ -30,8 +30,8 @@ try:
         call_command('remove_stale_queries')
     
     @uwsgidecorators.timer(86400)
-    def remove_profile(num):
-        call_command('remove_profile')
+    def hide_students(num):
+        call_command('hide_students')
 
 except ImportError:
     print("uwsgidecorators not found. Cron and timers are disabled")

@@ -52,7 +52,7 @@ class Titles(models.Model):
         ordering = ('-total_vote', 'title_name')
 
 class Participants(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name=_('Student Model'))
+    student = models.ForeignKey(Student, limit_choices_to=models.Q(hidden=False), on_delete=models.CASCADE, verbose_name=_('Student Model'))
     title_part = models.ForeignKey(Titles, on_delete=models.CASCADE, verbose_name=_('Titles Model'))
     stu_vote = models.PositiveBigIntegerField(_('Total No of Vote Registered by this student for the event'),default=0)
 

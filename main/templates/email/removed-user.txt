@@ -1,0 +1,1 @@
+{% verbatim %}{{name}} student successfully hidden(removed){% endverbatim %}

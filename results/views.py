@@ -4,6 +4,7 @@ from django.urls import reverse
 from student.templatetags import extras
 from student.views import total_students
 from titles.models import *
+from django.contrib import messages
 
 
 # Create your views here.
@@ -12,7 +13,9 @@ def leaderboard(request):
     participants_model = Participants.objects.all()
 
     total_votal = Titles.objects.aggregate(Sum('total_vote'))['total_vote__sum']
-    if not total_votal: return redirect(reverse('View Title'))
+    if not total_votal: 
+        messages.info(request,'No voting has been till now. So why don\'t you vote ?')
+        return redirect(reverse('View Title'))
 
     return render(
         request, 

@@ -10,14 +10,14 @@ from titles.models import *
 from .models import *
 from .templatetags import extras
 
-total_students = lambda: Student.objects.count()
+total_students = lambda: Student.objects.filter(hidden=False).count()
 students_vote_limit = lambda: Settings.objects.values('nickname_limit').get_or_create()[0]['nickname_limit']
 
 # Create your views here.
 
 #Student entry View
 def entry(request):
-    student_model = Student.objects.all()
+    student_model = Student.objects.filter(hidden=False).all()
     return render(
         request,
         'student-entry.html',
@@ -34,9 +34,9 @@ def search(request):
             stu_list = Student.onjects.none()
             messages.warning(request, "Please limit your query to 350 characters or less only!")
 
-        stuName = Student.objects.filter(name__icontains=query.strip(' '))
-        stuClass = Student.objects.filter(class_stu__icontains=query.strip(' '))
-        stutitle = Student.objects.filter(data__icontains=query.strip(' '))
+        stuName = Student.objects.filter(name__icontains=query.strip(' '),hidden=False)
+        stuClass = Student.objects.filter(class_stu__icontains=query.strip(' '),hidden=False)
+        stutitle = Student.objects.filter(data__icontains=query.strip(' '),hidden=False)
 
         stu_list = stuName.union(stuClass,stutitle)
         return render(
@@ -52,7 +52,7 @@ def search(request):
 
 # Student Views
 def student(request, slug):
-    student = get_object_or_404(Student,slug=slug)
+    student = get_object_or_404(Student,slug=slug,hidden=False)
     titles = Titles.objects.filter(gender=student.gender).all()
     titles_all = Titles.objects.filter(gender='ALL').all()
 

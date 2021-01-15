@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from student.models import Student
 from django.utils.html import mark_safe
 from django.core.exceptions import ValidationError
+from datetime import timedelta
 
 
 # Create your models here.
@@ -11,9 +12,10 @@ class Settings(models.Model):
     about_entry = models.TextField(_('The about us on the entry page'),null=True,blank=True)
     title_limit = models.IntegerField(_('No of times a one a vote for a particular title  per day'), default = 5)
     nickname_limit = models.IntegerField(_('No of times a one a give nicknames per day'), default = 20)
+    confession_limit = models.IntegerField(_('No of times a one make a confessions day'), default = 2)
     
-    vote_nicknameassigntime_start = models.DateTimeField(_('Start Time limit of assigning votes and nickname'))
-    vote_nicknameassigntime = models.DateTimeField(_('End Time limit of assigning votes and nickname'))
+    vote_nicknameassigntime_start = models.DateTimeField(_('Start Time limit of assigning votes and nickname'),default=timezone.now)
+    vote_nicknameassigntime = models.DateTimeField(_('End Time limit of assigning votes and nickname'),default=timezone.now()+timedelta(days=14))
 
     def __str__(self):
         return 'Settings'
@@ -44,7 +46,7 @@ def validate_insta_id(insta_id):
             params={'value': insta_id},
         )
 class Contact(models.Model):
-    name = models.ForeignKey(Student, on_delete=models.DO_NOTHING)
+    name = models.ForeignKey(Student, limit_choices_to=models.Q(hidden=False),on_delete=models.DO_NOTHING)
     instagram_id = models.CharField(max_length=254,null=True, blank=True,validators=[validate_insta_id])
     
     email = models.EmailField(max_length=254, null=True, blank=True)
@@ -64,11 +66,12 @@ class Contact(models.Model):
         return mark_safe(f'<a href="https://instagram.com/{self.instagram_id}/" target="_blank" rel="noopener noreferrer"><input type="button" class="default" value="Click Here"/></a>') if self.instagram_id else 'No Instagram Id provided'
 
 class RemoveName(models.Model):
-    student_models = models.OneToOneField(Student, on_delete=models.DO_NOTHING,unique=True)
-    time_field = models.TimeField(verbose_name=_('Time'),default=timezone.now)
+    student_models = models.OneToOneField(Student, limit_choices_to=models.Q(hidden=False),on_delete=models.DO_NOTHING,unique=True)
+    time_field = models.DateTimeField(verbose_name=_('Time'),default=timezone.now)
 
     def __str__(self):
         return self.student_models.name
     
     class Meta:
         verbose_name_plural = 'Remove Name'
+        ordering = ('-time_field',)

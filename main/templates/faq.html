@@ -2,7 +2,31 @@
 <script src="{% static 'js/faq.js' %}"></script>
 <link href="{% static 'css/faq.css' %}" rel="stylesheet">
 
-<div class="container mt-5">
+<div class="container mt-5 rounded">
+    <div class="accordion bg-white rounded">
+        <!-- One -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button text-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <span class="text-dark">##</span> &nbsp;<strong>What is LA<sup style="font-size: 10px;">22</sup>B ?</strong>
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <strong class="text-danger">As we see as of now that schools might not open and and we may not get the farewell due to n-Cov induced situtations. </strong><br/>So some us in <strong>SC-1</strong> decided to do a <strong class="text-success"> kind of farewell fun.</strong><br/>                    <span class="text-primary">So here the <b>student profiles</b> are created by the <b>administrators</b> and if you wish it can <b>removed</b> also!</span><br/> <strong class="text-muted">Here we have voting titles, like you can vote someone for specific title
+                    like that Mr.APS we have in school similarly we here we have lot of titles here.<br/> Also you give nicknames to a student like in Farewell class 11 students gives you nicknames badge like Mr. Pubg Player</strong>
+                </div>
+                <div class="accordion-body" id="intro">
+                    <h5>How do we process data ? </h5>
+                    <strong class="text-secondary">Well to be honest nothing is collected! Like even when you vote or give nicknames its all anonymous, yesss!! not even website creator or moderator cannot see who votes / who gave the nickname.<br/>                    Even we have the confession box where no one see who gave the confession yess but anyone can see what is the confession but not the one who wrote or gave that confession.</strong>                    😃<br/> Yess but we do <strong class="text-primary">use the session data to limit spamming!</strong> 😉<br/><strong class="text-success"> <span class="text-secondary">Still don't believe us ??</span> Then
+                    you can checkout this website source-code to see how it works</strong>&nbsp; {{'https://github.com/Dhruvacube/la22b'|urlizetrunc:20}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 rounded">
     <div class="accordion bg-white rounded">
         <!-- One -->
         <div class="accordion-item">
@@ -11,9 +35,11 @@
                     <span class="text-dark">1#</span> &nbsp;<strong>How to add your name in list ?</strong>
                 </button>
             </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div id="collapseOne" class="accordion-collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                 <div class="accordion-body" id="google-forms">
-                    <strong id="strongele">Your name not here in the list ?</strong> Well you can add your name by submitting your name in this form {{ 'https://forms.gle/M8hkJbjueH3KXgfDA'|urlizetrunc:20 }}
+                    <strong id="strongele" class="text-secondary">Your name not here in the student profile</strong> <a href="{% url 'Student Entry Page' %}" target="_blank">list</a> <strong id="strongele" class="text-secondary">?</strong> Well you can
+                    add your name by submitting your name in this form {{'https://forms.gle/M8hkJbjueH3KXgfDA'|urlizetrunc:20}} <br/>
+                    <span class="text-muted"><strong class="text-dark">Still wondering how do you have your profile here even you didn't submmited the form ?</strong> Well to be honest most of the student profile pictures were collected from the respective Instagram profiles. <strong>Still wanted to change to profile ? You can do so by submitting the above form.</strong></span>
                 </div>
             </div>
         </div>
@@ -21,11 +47,11 @@
         <!-- Two -->
         <div class="accordion-item">
             <h2 class="accordion-header">
-                <button class="accordion-button collapsed text-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <button class="accordion-button text-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                     <span class="text-dark">2#</span> &nbsp; <strong>How do I remove my profile ?</strong>
                 </button>
             </h2>
-            <div id="collapseTwo" class="accordion-collapse show collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+            <div id="collapseTwo" class="accordion-collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                     <h5>You can remove your name submitting your name to this form. Your name will be removed automatically after <b class=text-danger>24hrs</b> after submitting</h5>
                     <form id="removenameform" action="{% url 'Remove Name API' %}" method="post" class="row row-cols-lg-auto g-3 align-items-center">{% csrf_token %}
@@ -34,7 +60,7 @@
                             <small id="nonewarning" class="text-danger d-none">Please select your name</small>
                         </div>
                         <div class="col-12">
-                            <button type="button" class="btn btn-danger" onclick="show_confirmation_form()">Proceed</button>
+                            <button type="button" class="btn btn-danger" {% if date_start_end_else %}disabled{% endif %} onclick="show_confirmation_form()">Proceed</button>
                         </div>
                     </form>
                 </div>
@@ -50,13 +76,13 @@
         <!-- Two -->
         <div class="accordion-item">
             <h2 class="accordion-header">
-                <button class="accordion-button collapsed text-info" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <button class="accordion-button collapsed text-info" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
                     <span class="text-dark">3#</span> &nbsp; <strong>What is the duration for the voting and giving nicknames ?</strong>
                 </button>
             </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+            <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                    <strong>For both the duration is.</strong> from <strong class="text-success">{{settings.vote_nicknameassigntime_start}}</strong> to <strong class="text-danger">{{settings.vote_nicknameassigntime}}</strong><br/>
+                    <strong class="text-secondary">For both the duration is.</strong> from <strong class="text-success">{{settings.vote_nicknameassigntime_start}}</strong> to <strong class="text-danger">{{settings.vote_nicknameassigntime}}</strong><br/>
                 </div>
             </div>
         </div>
@@ -64,28 +90,29 @@
         <div class="accordion-item">
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                    4# &nbsp; <strong>How times a day one can vote or give nicknames ?</strong>
+                    4# &nbsp; <strong>How times a day one can vote or give nicknames or make confession ?</strong>
                 </button>
             </h2>
             <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                    For <strong>voting titles</strong> the limit is. <strong class="text-success">{{settings.title_limit}} times</strong> a day to per person<br/> For <strong>nickname</strong> the limit is. <strong class="text-success">{{settings.nickname_limit}} times</strong>                    a day per person
+                    For <strong class="text-secondary">voting titles</strong> the limit is. <strong class="text-success">{{settings.title_limit}} times</strong> a day to per person<br/> For <strong class="text-secondary">nickname</strong> the limit is.
+                    <strong class="text-success">{{settings.nickname_limit}} times</strong> a day per person.<br/> For <strong class="text-secondary">confession</strong> the limit is. <strong class="text-success">{{settings.confession_limit}} times</strong>                    a day.<br/>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
     <div class="accordion bg-white rounded">
         <!-- Three -->
         <div class="accordion-item">
             <h2 class="accordion-header">
-                <button class="accordion-button collapsed text-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                <button class="accordion-button text-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                     4# &nbsp;<strong>How to contact us ?</strong>
                 </button>
             </h2>
-            <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div id="collapseThree" class="accordion-collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                     <h5 class="container mb-5">Well you can contact us by submitting your query through this form</h5>
 
@@ -102,7 +129,7 @@
                         {% endfor %}
 
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary mb-3">Submit Query</button>
+                            <button type="submit" class="btn btn-primary mb-3" {% if date_start_end_else %}disabled{% endif %}>Submit Query</button>
                         </div>
                     </form>
 

@@ -9,6 +9,9 @@ from .models import *
 def date_start_end():
     a = get_object_or_404(Settings)
     return True if a.vote_nicknameassigntime_start > timezone.now() or a.vote_nicknameassigntime < timezone.now() else False
+def date_start_end_else():
+    a = get_object_or_404(Settings)
+    return True if a.vote_nicknameassigntime < timezone.now() else False
 
 class ConfessionForm(ModelForm):
     class Meta:
@@ -44,6 +47,12 @@ class ContactForm(ModelForm):
         self.fields['email'].widget.attrs["placeholder"] = "your_email_address@service-provider.com   (Optional)"
         self.fields['subject'].widget.attrs["placeholder"] = "Subject Heading"
         self.fields['message'].widget.attrs["placeholder"] = "Your Message ....."
+        
+        self.fields['name'].widget.attrs["disabled"] = date_start_end_else()
+        self.fields['instagram_id'].widget.attrs["disabled"] = date_start_end_else()
+        self.fields['subject'].widget.attrs["disabled"] = date_start_end_else()
+        self.fields['message'].widget.attrs["disabled"] = date_start_end_else()
+        self.fields['email'].widget.attrs["disabled"] = date_start_end_else()
 
 
 class RemoveProfileForm(ModelForm):
@@ -56,3 +65,4 @@ class RemoveProfileForm(ModelForm):
 
         self.fields['student_models'].widget.attrs["class"] = "form-control form-select"
         self.fields['student_models'].widget.attrs["style"] = "width:300px"
+        self.fields['student_models'].widget.attrs["disabled"] = date_start_end_else()

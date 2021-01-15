@@ -9,7 +9,7 @@ from .models import *
 
 # Register your models here.
 class SettingsAdmin(admin.ModelAdmin):
-    search_fields = list_display = ('about_entry','title_limit','nickname_limit','vote_nicknameassigntime_start','vote_nicknameassigntime')
+    search_fields = list_display = ('about_entry','title_limit','nickname_limit','confession_limit','vote_nicknameassigntime_start','vote_nicknameassigntime',)
 
     def has_add_permission(self, request):
         num_objects = Settings.objects.count()
@@ -67,6 +67,7 @@ class ContactAdmin(admin.ModelAdmin):
 
 class RemoveNameAdmin(admin.ModelAdmin):
     search_fields = list_display = ('student_models','time_field')
+    list_filter = ('time_field',)
     readonly_fields = ('time_field',)
     list_per_page = 10
 

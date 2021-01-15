@@ -28,7 +28,7 @@
 
         // If the count down is over, write some text 
         if (distance < 0) {
-            clearInterval(countdownfunction);
+            clearInterval(countdownfunction_start);
             document.getElementById("date_write").innerHTML = "ENDED";
         }
     }, 1000);
@@ -47,7 +47,7 @@
         <!-- Profile Photo -->
         <div class="col-md-4">
             <div class="profile-img">
-                <img class="border border-primary rounded" src="{{student.profile_pic.url}}" alt="Photo of {{student.name}}" style="border-radius: 5%;" />
+                <img class="border border-primary rounded" src="{{student.profile_pic.url}}" alt="Photo of {{student.name}}" style="border-radius: 5%; " />
             </div>
         </div>
 

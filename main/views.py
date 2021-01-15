@@ -4,14 +4,23 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
+from post_office import mail
+from post_office.models import EmailTemplate
 from student.models import Student
+import random
 
-from .models import *
 from .forms import *
+from .models import *
 
 total_students = lambda: Student.objects.count()
+
+#For contact and form button
+def date_start_end_else():
+    a = get_object_or_404(Settings)
+    return True if a.vote_nicknameassigntime < timezone.now() else False
 
 #A simpple function to get if the voting timing has begun or ends 
 def date_start_end():
@@ -51,11 +60,34 @@ def home(request):
 def faq(request):
     form = ContactForm()
     remove_form = RemoveProfileForm()
+
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
-           form.save()
-           messages.success(request, 'Query successfully submitted')
+            
+            if not EmailTemplate.objects.filter(name='contact').all():
+                message = render_to_string('email/contact-message.txt')
+                mail_subject = 'New contact entry at LA22B'
+                EmailTemplate.objects.create(
+                        name='contact',
+                        description="The email template to intimate admin about the contact entry.",
+                        subject=mail_subject,
+                        content=message,
+                )
+            mail.send(
+                settings.EMAIL_HOST_USER,
+                settings.EMAIL_HOST_USER,
+                template='contact',
+                context={
+                    'name': form.cleaned_data.get('name'),
+                    'insta_id': 'https://instagram.com/'+form.cleaned_data.get('instagram_id')+'/',
+                    'subject': form.cleaned_data.get('subject'),
+                    'email': form.cleaned_data.get('email'),
+                    'message': form.cleaned_data.get('message'),
+                },
+            )
+            form.save()
+            messages.success(request, 'Your query successfully submitted')
         else:
             messages.error(request,'Please correct the errors the below')
     return render(
@@ -66,6 +98,7 @@ def faq(request):
             'settings': Settings.objects.get_or_create()[0],
             'form': form,
             'remove_form': remove_form,
+            'date_start_end_else':date_start_end_else(),
         }
     )
 
@@ -73,9 +106,25 @@ def remove_name_api(request):
     if request.method == "POST":
         form = RemoveProfileForm(request.POST)
         if form.is_valid():
-           form.save()
-           messages.warning(request, 'Your name has been added to removal list.')
-           return redirect(reverse('FAQ'))
+            if not EmailTemplate.objects.filter(name='remove_name_form').all():
+                EmailTemplate.objects.create(
+                        name='remove_name_form',
+                        description="The email template to intimate admin about that removed form entry.",
+                        subject='A student wants to get hidden from the site',
+                        content=render_to_string('email/remove-user.txt'),
+                )
+
+            mail.send(
+                settings.EMAIL_HOST_USER,
+                settings.EMAIL_HOST_USER,
+                template='remove_name_form',
+                context={
+                    'name': form.cleaned_data.get('student_models'),
+                },
+            )
+            form.save()
+            messages.warning(request, 'Your name has been added to removal list.')
+            return redirect(reverse('FAQ'))
         else:
             if form.errors.as_data().get('student_models'):
                 messages.warning(request,'Your name is already there in the removal list.')
@@ -129,10 +178,18 @@ def confession_more(request):
 def confession_store(request):
     if request.method == 'POST':
         form = ConfessionForm(request.POST)
+        confessionlim = Settings.objects.get_or_create()[0].confession_limit
         if form.is_valid():
-           form.save()
-           messages.success(request, 'Confession successfully stored!')
-           return redirect(request.META.get('HTTP_REFERER'))
+            if request.session.get('confession-per-day', 0) > confessionlim:
+                messages.error(request, f'You can\'t store any more confession because you have crossed the limit of {confessionlim} confession per day.')
+                return redirect(request.META.get('HTTP_REFERER'))
+            else:
+                try: request.session['confession-per-day'] = request.session['confession-per-day'] + 1
+                except: request.session['confession-per-day'] = 1
+
+                form.save()
+                messages.success(request, 'Confession successfully stored!')
+                return redirect(request.META.get('HTTP_REFERER'))
         else:
             messages.error(request,'Please do not keep the confessions blank or with only special characters!')
             return redirect(request.META.get('HTTP_REFERER'))
@@ -174,6 +231,7 @@ def partner_result(request):
                 'backgroundAnime': randomAnimeChar(),
                 'total_students':total_students,
                 'message_conxt': 'Matching',
+                'random_love_percentage': random.randint(40,100)
             }
         )
     else: return redirect(reverse('Partner Finder'))

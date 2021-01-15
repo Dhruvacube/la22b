@@ -53,6 +53,7 @@ class Student(models.Model):
         verbose_name=_('Gender')
     )
     note = models.TextField(blank=True,null=True)
+    hidden = models.BooleanField(default=False)
     data = models.TextField(verbose_name=_('Title given by the others'),default=dict)
 
     class Meta:

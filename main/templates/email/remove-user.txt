@@ -1,0 +1,6 @@
+{% verbatim %}
+{{name}} wants to get hidden(removed) from the site.
+
+From,
+    LA22B website
+{% endverbatim %}

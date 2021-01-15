@@ -1,4 +1,7 @@
 $(document).ready(function() {
+    $('#intro').children().attr({ 'target': '_blank', 'rel': 'noopener noreferrer' });
+    $('strong').removeAttr('rel');
+    $('strong').removeAttr('target');
     $('#google-forms').children().attr({ 'target': '_blank', 'rel': 'noopener noreferrer' });
     $('#strongele').removeAttr('target');
     $('#strongele').removeAttr('rel');
