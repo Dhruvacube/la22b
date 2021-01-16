@@ -53,8 +53,8 @@ def search(request):
 # Student Views
 def student(request, slug):
     student = get_object_or_404(Student,slug=slug,hidden=False)
-    titles = Titles.objects.filter(gender=student.gender).all()
-    titles_all = Titles.objects.filter(gender='ALL').all()
+    titles = Titles.objects.filter(gender=student.gender, title_stu=student.class_stu).all()
+    titles_all = Titles.objects.filter(gender='ALL',title_stu=student.class_stu).all()
 
     t1 = ast.literal_eval(student.data).get('titles')
     t = t1 if t1 else ['Dummy','List'] 
