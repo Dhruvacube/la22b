@@ -14,7 +14,7 @@
             </div>
             <div class="card-body">
                 <p class="card-title"><strong>Total votes: {{i.total_vote|intcomma}} {% if i.total_vote %}{% ifequal i.total_vote 1 %}vote{% else %}votes{% endifequal %}{% else %}vote{% endif %}</strong></p>
-                <p class="card-text">{{i.desc}}</p>
+                <p class="card-text">{{i.desc|truncatechars:52}}</p>
                 <p class="card-text"><a class="nav-link btn btn-outline-primary" href="{% url 'Vote Title' slug=i.slug %}">Vote</a></p>
             </div>
         </div>
