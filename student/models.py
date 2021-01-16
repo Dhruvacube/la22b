@@ -76,8 +76,37 @@ class Student(models.Model):
         for i in self.name.split(' '): self.nameb += str(i.capitalize()) + ' '
         self.name = self.nameb
         self.slug = '-'.join(self.name.lower().translate({ord(c): None for c in string.whitespace}))
-
+        self.profile_pic = self.process_image_profile(self.profile_pic)
         return super(Student, self).save(*args, **kwargs)
+
+    def process_image_profile(self, profile_pic):
+        from PIL import Image, ImageFilter
+        from io import BytesIO
+        from django.core.files.uploadedfile import InMemoryUploadedFile
+        import sys
+
+        im = Image.open(profile_pic)
+        outputIoStream = BytesIO()
+        h1,w1 = im.size
+
+        if h1 == 3072 or w1 == 2048:
+            return profile_pic
+        elif h1 > 3072 or w1 > 2048:
+            im.resize((3072,2048), Image.ANTIALIAS)
+            im.save(outputIoStream, format='JPEG')
+        else:
+            gaussImage = im.filter(ImageFilter.GaussianBlur(30))
+            resized_im = gaussImage.resize((3072,2048), Image.ANTIALIAS)
+
+            bg_w, bg_h = resized_im.size
+            img_w, img_h = im.size
+            offset = ((bg_w - img_w*3) // 2, (bg_h - img_h*3) // 2)
+            resized_im.paste(im.resize((img_w*3, img_h*3), Image.ANTIALIAS), offset)
+            resized_im.save(outputIoStream, format='JPEG')
+        
+        outputIoStream.seek(0)
+        uploadedImage = InMemoryUploadedFile(outputIoStream,'ImageField', "%s.jpg" % profile_pic.name.split('.')[0], 'image/jpeg', sys.getsizeof(outputIoStream), None)
+        return uploadedImage  
     
     def delete(self, using=None, keep_parents=False):
         fs.delete(str(self.profile_pic))
