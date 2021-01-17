@@ -13,6 +13,13 @@ from .templatetags import extras
 total_students = lambda: Student.objects.filter(hidden=False).count()
 students_vote_limit = lambda: Settings.objects.values('nickname_limit').get_or_create()[0]['nickname_limit']
 
+def photo(class_stu):
+    if class_stu == 'SC-1': return 'class/sc_1.jpeg'
+    elif class_stu == 'SC-2': return 'class/sc_2.jpeg'
+    elif class_stu == 'SC-3': return 'class/sc_3.jpeg'
+    elif class_stu == 'COMMERCE': return 'class/commerce.jpeg'
+    elif class_stu == 'ARTS': return 'class/arts.jpeg'
+
 # Create your views here.
 
 #Student entry View
@@ -74,6 +81,7 @@ def student(request, slug):
             'date_start_end': date_start_end,
             'starts_end': get_respect_date()[1],
             'get_date': str(get_respect_date()[0].strftime("%b %d, %Y %X")),
+            'photo': photo(student.class_stu)
         }
     )
 

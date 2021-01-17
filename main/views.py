@@ -11,6 +11,7 @@ from post_office import mail
 from post_office.models import EmailTemplate
 from student.models import Student
 import random
+import os
 
 from .forms import *
 from .models import *
@@ -48,11 +49,14 @@ def user_logout(request):
 
 
 def home(request):
+    print(os.listdir(settings.BASE_DIR / os.path.join('main', 'static', 'class')))
+    class_img = ['class/'+i for i in os.listdir(settings.BASE_DIR / os.path.join('main', 'static', 'class'))]
     return render(
         request,
         'cover.html',
         {
             'cover_body': Settings.objects.values('about_entry').get_or_create()[0]['about_entry'], 
+            'class_img': class_img,
         }
     )
 
