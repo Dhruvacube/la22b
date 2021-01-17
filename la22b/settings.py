@@ -59,7 +59,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'la22b.wsgi.application'
-ADMINS = [('dhruva', 'dhruvashaw@gmail.com'),]
 
 
 # Database
@@ -153,3 +152,5 @@ EMAIL_PORT = os.environ['EMAIL_PORT']
 EMAIL_USE_SSL = os.environ['EMAIL_USE_SSL']
 EMAIL_BACKEND = 'post_office.EmailBackend'
 DEFAULT_FROM_EMAIL  = os.environ['DEFAULT_FROM_EMAIL']
+
+ADMINS = [('admin', EMAIL_HOST_USER),]
