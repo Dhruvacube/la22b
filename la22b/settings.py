@@ -59,6 +59,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'la22b.wsgi.application'
+ADMINS = [('dhruva', 'dhruvashaw@gmail.com'),]
 
 
 # Database
