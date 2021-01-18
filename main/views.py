@@ -47,9 +47,16 @@ def user_logout(request):
     messages.success(request, "You have been successfully logged out!")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+#message vote url
+def message_vote(request):
+    a=get_respect_date()
+    if a[1] == 'start':
+        messages.info(request, f"The voting and nickname giving will start on {a[0].date().strftime('%d %b, %Y')}")
+    else:
+        messages.info(request, "The voting and nickname giving has started !!!!")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def home(request):
-    print(os.listdir(settings.BASE_DIR / os.path.join('main', 'static', 'class')))
     class_img = ['class/'+i for i in os.listdir(settings.BASE_DIR / os.path.join('main', 'static', 'class'))]
     return render(
         request,
@@ -103,6 +110,7 @@ def faq(request):
             'form': form,
             'remove_form': remove_form,
             'date_start_end_else':date_start_end_else(),
+            'bell': date_start_end_else(),
         }
     )
 

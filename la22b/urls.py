@@ -10,6 +10,8 @@ urlpatterns = [
     
     path('', views.home, name="Cover Page"),
 
+    path('important_message/', views.message_vote, name="Important Message"),
+
     path('faq/', views.faq, name="FAQ"),
     path('remove_name_api/', views.remove_name_api, name="Remove Name API"),
 

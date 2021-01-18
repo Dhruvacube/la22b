@@ -9,6 +9,7 @@ from titles.models import *
 
 from .models import *
 from .templatetags import extras
+from main. forms import date_start_end_else
 
 total_students = lambda: Student.objects.filter(hidden=False).count()
 students_vote_limit = lambda: Settings.objects.values('nickname_limit').get_or_create()[0]['nickname_limit']
@@ -32,6 +33,7 @@ def entry(request):
             'total_students': total_students,
             'image': 'class/sc_1.jpeg',
             'classes': classes,
+            'bell': date_start_end_else(),
         }
     )
 
@@ -44,6 +46,7 @@ def student_class_wise(request,class_stu):
             'total_students': total_students,
             'student_model': student_model,
             'class_stu':class_stu,
+            'bell': date_start_end_else(),
         }
     )
 
@@ -65,6 +68,7 @@ def search(request):
             {
                 'total_students': total_students,
                 'student_model': stu_list,
+                'bell': date_start_end_else(),
             }
         )
     else:
@@ -93,7 +97,8 @@ def student(request, class_stu ,slug):
             'date_start_end': date_start_end,
             'starts_end': get_respect_date()[1],
             'get_date': str(get_respect_date()[0].strftime("%b %d, %Y %X")),
-            'photo': photo(student.class_stu)
+            'photo': photo(student.class_stu),
+            'bell': date_start_end_else(),
         }
     )
 
