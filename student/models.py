@@ -7,7 +7,7 @@ from django.utils.html import mark_safe
 from django.utils.translation import gettext_lazy as _
 from gdstorage.storage import GoogleDriveStorage
 
-if settings.PRODUCTION_SERVER:
+if settings.PRODUCTION_SERVER or settings.DUMMY_PRODUCTION:
     fs = GoogleDriveStorage()
 else:
     fs = FileSystemStorage()

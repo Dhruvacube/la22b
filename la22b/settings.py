@@ -1,3 +1,4 @@
+import ast
 import os
 from pathlib import Path
 
@@ -59,7 +60,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'la22b.wsgi.application'
-
+DUMMY_PRODUCTION = ast.literal_eval(os.environ['DUMMY_PRODUCTION'])
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -72,12 +73,14 @@ if os.path.isfile(dotenv_file):
     ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
     DEBUG = True
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
-    GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = BASE_DIR /'gdrive_config.json'
-
     DATABASES = {'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))}
-
-    MEDIA_ROOT = BASE_DIR / 'media'
-    if not os.path.exists(MEDIA_ROOT): os.mkdir(MEDIA_ROOT)
+    
+    if DUMMY_PRODUCTION:
+        GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = BASE_DIR /'gdrive_config.json'
+        INSTALLED_APPS=INSTALLED_APPS[0:-1]+['gdstorage',]+[INSTALLED_APPS[-1]]
+    else:
+        MEDIA_ROOT = BASE_DIR / 'media'
+        if not os.path.exists(MEDIA_ROOT): os.mkdir(MEDIA_ROOT)
 
 else:
     PRODUCTION_SERVER = True
@@ -88,7 +91,7 @@ else:
     SECRET_KEY = os.environ['SECRET_KEY']
 
     MIDDLEWARE = [MIDDLEWARE[0]]+['whitenoise.middleware.WhiteNoiseMiddleware']+MIDDLEWARE[1:]
-    INSTALLED_APPS=INSTALLED_APPS[0:-1]+['whitenoise.runserver_nostatic']+[INSTALLED_APPS[-1]]
+    INSTALLED_APPS=INSTALLED_APPS[0:-1]+['whitenoise.runserver_nostatic','gdstorage']+[INSTALLED_APPS[-1]]
 
 
 # Password validation
