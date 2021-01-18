@@ -60,7 +60,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'la22b.wsgi.application'
-DUMMY_PRODUCTION = ast.literal_eval(os.environ['DUMMY_PRODUCTION'])
+DUMMY_PRODUCTION = ast.literal_eval(os.environ.get('DUMMY_PRODUCTION', 'False'))
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -74,13 +74,7 @@ if os.path.isfile(dotenv_file):
     DEBUG = True
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
     DATABASES = {'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))}
-    
-    if DUMMY_PRODUCTION:
-        GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = BASE_DIR /'gdrive_config.json'
-        INSTALLED_APPS=INSTALLED_APPS[0:-1]+['gdstorage',]+[INSTALLED_APPS[-1]]
-    else:
-        MEDIA_ROOT = BASE_DIR / 'media'
-        if not os.path.exists(MEDIA_ROOT): os.mkdir(MEDIA_ROOT)
+    GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = BASE_DIR /'gdrive_config.json'
 
 else:
     PRODUCTION_SERVER = True
@@ -157,3 +151,9 @@ EMAIL_BACKEND = 'post_office.EmailBackend'
 DEFAULT_FROM_EMAIL  = os.environ['DEFAULT_FROM_EMAIL']
 
 ADMINS = [('admin', EMAIL_HOST_USER),]
+
+if DUMMY_PRODUCTION:
+    INSTALLED_APPS=INSTALLED_APPS[0:-1]+['gdstorage',]+[INSTALLED_APPS[-1]]
+else:
+    MEDIA_ROOT = BASE_DIR / 'media'
+    if not os.path.exists(MEDIA_ROOT): os.mkdir(MEDIA_ROOT)

@@ -24,13 +24,26 @@ def photo(class_stu):
 
 #Student entry View
 def entry(request):
-    student_model = Student.objects.filter(hidden=False).all()
+    classes = Student.objects.values('class_stu').distinct('class_stu')
+    return render(
+        request,
+        'class.html',
+        {
+            'total_students': total_students,
+            'image': 'class/sc_1.jpeg',
+            'classes': classes,
+        }
+    )
+
+def student_class_wise(request,class_stu):
+    student_model = Student.objects.filter(hidden=False,class_stu=class_stu.upper()).all()
     return render(
         request,
         'student-entry.html',
         {
             'total_students': total_students,
             'student_model': student_model,
+            'class_stu':class_stu,
         }
     )
 
@@ -58,8 +71,8 @@ def search(request):
         return redirect(reverse('Student Entry Page'))
 
 # Student Views
-def student(request, slug):
-    student = get_object_or_404(Student,slug=slug,hidden=False)
+def student(request, class_stu ,slug):
+    student = get_object_or_404(Student,slug=slug,hidden=False,class_stu=class_stu.upper())
     titles = Titles.objects.filter(gender=student.gender, title_stu=student.class_stu).all()
     titles_all = Titles.objects.filter(gender='ALL',title_stu='ALL').all()
 

@@ -139,7 +139,7 @@
                                 <tr>
                                     <th scope="row">1</th>
                                     <td>{{i|get_val:0}}</td>
-                                    <td>{{i|get_val:1}} {% if i|get_val:1 <= 1 %}time{% else %}times{% endif %}</td>
+                                    <td>{{i|get_val:1}} time{{i|get_val:1|pluralize}}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

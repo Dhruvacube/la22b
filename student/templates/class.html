@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}{% load static %}{% load extras %}{% block body %}
+<link href="{% static 'css/class.css' %}" rel="stylesheet" />
+<center>
+    <div class="container mt-5 mb-5">
+        {% for i in classes %}
+        <div class="card border-primary mb-3" style="max-width: 18rem;">
+            <div class="card-body">
+                <h1 style="background-image: url('{% static i.class_stu|get_photo %}');" class="card-title pt-5 pb-5 pl-4 pr-4 rounded text-light">{{i.class_stu}}</h1>
+                <p class="card-text"><a id="link{{forloop.counter}}" onclick="load_loader({{forloop.counter}})" href="{% url 'Student Class Wise' class_stu=i.class_stu|lower %}" class="nav-link btn btn-outline-primary rounded">Visit Class · {{i.class_stu}}</a></p>
+                <div id="loader{{forloop.counter}}" class="spinner-border text-primary d-none" role="status"></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</center>
+{% endblock %}

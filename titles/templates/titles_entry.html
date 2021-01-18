@@ -13,9 +13,12 @@
                 <h4><img src="{% static 'img/logo.png' %}" alt="LA22B" width="30" height="30"> {{i.title_name}}</h4>
             </div>
             <div class="card-body">
-                <p class="card-title"><strong>Total votes: {{i.total_vote|intcomma}} {% if i.total_vote %}{% ifequal i.total_vote 1 %}vote{% else %}votes{% endifequal %}{% else %}vote{% endif %}</strong></p>
+                <p class="card-title"><strong>Total votes: {{i.total_vote|intcomma}} vote{{ i.total_vote|pluralize }}</strong></p>
                 <p class="card-text">{{i.desc|truncatechars:52}}</p>
-                <p class="card-text"><a class="nav-link btn btn-outline-primary" href="{% url 'Vote Title' slug=i.slug %}">Vote</a></p>
+                <p class="card-text"><a id="link{{forloop.counter}}" onclick="load_loader({{forloop.counter}})" class="nav-link btn btn-outline-primary" href="{% url 'Vote Title' slug=i.slug %}">Vote</a></p>
+                <center id="loader{{forloop.counter}}" class="d-none">
+                    <div class="spinner-border text-dark" role="status"></div>
+                </center>
             </div>
         </div>
     </div>

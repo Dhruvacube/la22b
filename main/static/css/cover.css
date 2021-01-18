@@ -28,19 +28,25 @@ body {
     background-position: center;
     background: url('../class/sc_3.jpeg');
     background-repeat: no-repeat;
-    animation: class 5s infinite alternate;
+    animation: class 15s linear 2s infinite alternate;
     background-size: cover;
 }
 
 @keyframes class {
     0% {
-        background: url('../class/sc_3.jpeg');
+        background: url('../class/sc_1.jpeg');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
     }
     40% {
-        background: url('../class/sc_3.jpeg');
+        background: url('../class/sc_1.jpeg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    50% {
+        background: url('../class/sc_2.jpeg');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
@@ -52,13 +58,13 @@ body {
         background-position: center;
     }
     80% {
-        background: url('../class/sc_1.jpeg');
+        background: url('../class/sc_3.jpeg');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
     }
     100% {
-        background: url('../class/sc_1.jpeg');
+        background: url('../class/sc_3.jpeg');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
