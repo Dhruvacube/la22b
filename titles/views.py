@@ -42,7 +42,6 @@ def vote(request,slug):
     else:
         student_model = Student.objects.filter(hidden=False,gender=title_model.gender,class_stu=title_model.title_stu).values('name','slug','class_stu')
         class_model = Student.objects.filter(hidden=False,gender=title_model.gender,class_stu=title_model.title_stu).values('class_stu',).distinct('class_stu')
-    print(class_model)
     return render(
         request,
         'vote.html',
