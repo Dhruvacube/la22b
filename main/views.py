@@ -29,7 +29,7 @@ def date_start_end():
     return True if a.vote_nicknameassigntime_start > timezone.now() or a.vote_nicknameassigntime < timezone.now() else False
 
 def get_respect_date():
-    a = Settings.objects.get_or_create()[0]
+    a = Settings.objects.get()
     if a.vote_nicknameassigntime_start > timezone.now():
         return (a.vote_nicknameassigntime_start, 'start')
     elif a.vote_nicknameassigntime < timezone.now():
@@ -51,7 +51,7 @@ def user_logout(request):
 def message_vote(request):
     a=get_respect_date()
     if a[1] == 'start':
-        messages.info(request, f"The voting and nickname giving will start on {a[0].date().strftime('%d %b, %Y')}")
+        messages.info(request, f"The voting and nickname giving will start on {a[0].strftime('%d %b, %Y')}")
     else:
         messages.info(request, "The voting and nickname giving has started !!!!")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
