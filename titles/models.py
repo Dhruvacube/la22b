@@ -1,6 +1,7 @@
 from django.db import models
 from student.models import Student
 from django.utils.translation import gettext_lazy as _
+from colorfield.fields import ColorField
 
 # Create your models here.
 class Titles(models.Model):
@@ -29,6 +30,7 @@ class Titles(models.Model):
         default='sc1',
         verbose_name=_('Class')
     )
+    colour = ColorField(default='#f57e42')
     slug = models.CharField(max_length=250,verbose_name=_('Slug of the Title'),unique=True, blank=True, null=True)
     total_vote = models.PositiveBigIntegerField(_('Total No of Vote Registered'),default=0)
 
@@ -49,7 +51,7 @@ class Titles(models.Model):
     
     class Meta:
         verbose_name_plural = "Titles"
-        ordering = ('-total_vote', 'title_name')
+        ordering = ('colour', '-total_vote', 'title_name')
 
 class Participants(models.Model):
     student = models.ForeignKey(Student, limit_choices_to=models.Q(hidden=False), on_delete=models.CASCADE, verbose_name=_('Student Model'))

@@ -13,7 +13,7 @@ class TitlesAdmin(admin.ModelAdmin):
     list_per_page = 20
 
     fieldsets = (
-        (_('Title'),{'fields':('title_name',)}),
+        (_('Title'),{'fields':('title_name','colour',)}),
         (_('Gender'),{'fields':('gender',)}),
         (_('Class'),{'fields':('title_stu',)}),
         (_('Description'),{'fields':('desc','slug')}),

@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 
     'post_office',
+    'colorfield',
 ]
 
 MIDDLEWARE = [
