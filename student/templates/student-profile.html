@@ -78,7 +78,7 @@
             <div class="profile-work">
                 <p>VOTE TITLES</p>
                 {% for i in titles %}
-                <a href="{% url 'Vote Title' slug=i.slug %}">{{i.title_name}}</a><br/> {% endfor %}
+                <a href="{% url 'Vote Title' slug=i.slug %}" style="color: {{i.colour}};">{{i.title_name}}</a><br/> {% endfor %}
             </div>
             {% endif %}
         </div>
