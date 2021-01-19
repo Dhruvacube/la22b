@@ -28,16 +28,21 @@ def title_entry(request):
 def vote(request,slug):
     title_model = get_object_or_404(Titles,slug=slug)
     if title_model.title_stu == 'ALL' and title_model.gender == 'ALL':
-        student_model = Student.objects.filter(hidden=False).values('name','slug',).all()
+        student_model = Student.objects.filter(hidden=False).values('name','slug','class_stu').all()
+        class_model = Student.objects.filter(hidden=False).values('class_stu',).distinct('class_stu')
     
     elif title_model.title_stu == 'ALL':
-        student_model = Student.objects.filter(hidden=False,gender=title_model.gender,).values('name','slug',).all()
-    
+        student_model = Student.objects.filter(hidden=False,gender=title_model.gender,).values('name','slug','class_stu').all()
+        class_model = Student.objects.filter(hidden=False,gender=title_model.gender,).values('class_stu',).distinct('class_stu')
+
     elif title_model.gender == 'ALL':
-        student_model = Student.objects.filter(hidden=False,class_stu=title_model.title_stu).values('name','slug',).all()
-    
+        student_model = Student.objects.filter(hidden=False,class_stu=title_model.title_stu).values('name','slug','class_stu').all()
+        class_model = Student.objects.filter(hidden=False,class_stu=title_model.title_stu).values('class_stu',).distinct('class_stu')
+
     else:
-        student_model = Student.objects.filter(hidden=False,gender=title_model.gender,class_stu=title_model.title_stu).values('name','slug',).all()
+        student_model = Student.objects.filter(hidden=False,gender=title_model.gender,class_stu=title_model.title_stu).values('name','slug','class_stu')
+        class_model = Student.objects.filter(hidden=False,gender=title_model.gender,class_stu=title_model.title_stu).values('class_stu',).distinct('class_stu')
+    print(class_model)
     return render(
         request,
         'vote.html',
@@ -45,6 +50,7 @@ def vote(request,slug):
             'title_model': title_model,
             'student_model': student_model,
             'slug': slug,
+            'class_model':class_model,
             'profile_stu': True,
             'total_students': total_students,
             'participants_model_ten':Participants.objects.filter(title_part=title_model).order_by('-stu_vote').all()[:10],
