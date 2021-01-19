@@ -97,7 +97,7 @@
                                 <input type="text" class="invisible" name="title_name" value="{{slug}}">
                                 <div class="col-8">
                                     {% for j in class_model %}
-                                    <hr {% ifequal forloop.counter 1 %}class="mt-0" {% endifequal %} /><strong style="colour:{{title_model.colour}};">{{j.class_stu}}</strong>
+                                    <hr {% ifequal forloop.counter 1 %}class="mt-0" {% endifequal %} /><strong style="color:{{title_model.colour}};">{{j.class_stu}}</strong>
                                     <hr/>{% for i in student_model %} {% ifequal j.class_stu i.class_stu %}
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="student" id="{{i.name}}" value="{{i.slug}}" {% ifequal forloop.counter 1 %}checked{% endifequal %} {% if date_start_end %}disabled{% endif %}>
