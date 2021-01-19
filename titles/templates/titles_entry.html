@@ -10,10 +10,10 @@
     <div class="col">
         <div class="card border-primary" style="width: 18rem;">
             <div class="card-header border-primary">
-                <h4><img src="{% static 'img/logo.png' %}" alt="LA22B" width="30" height="30"> {{i.title_name}}</h4>
+                <h4 style="color: {{i.colour}};"><img src="{% static 'img/logo.png' %}" alt="LA22B" width="30" height="30"> {{i.title_name}}</h4>
             </div>
             <div class="card-body">
-                <p class="card-title"><strong>Total votes: {{i.total_vote|intcomma}} vote{{ i.total_vote|pluralize }}</strong></p>
+                <p class="card-title"><strong style="color: {{i.colour}};">Total votes: {{i.total_vote|intcomma}} vote{{ i.total_vote|pluralize }}</strong></p>
                 <p class="card-text">{{i.desc|truncatechars:52}}</p>
                 <p class="card-text"><a id="link{{forloop.counter}}" onclick="load_loader({{forloop.counter}})" class="nav-link btn btn-outline-primary" href="{% url 'Vote Title' slug=i.slug %}">Vote</a></p>
                 <center id="loader{{forloop.counter}}" class="d-none">
