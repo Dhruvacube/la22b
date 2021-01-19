@@ -26,7 +26,7 @@
             <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                 <div class="d-flex justify-content-between">
                     <strong class="text-gray-dark">{{j.student.name}}</strong>
-                    <a href="{% url 'Student Profile' class_stu=i.class_stu slug=j.student.slug %}" target="_blank" rel="noopener noreferrer">View Profile</a>
+                    <a href="{% url 'Student Profile' class_stu=j.student.class_stu slug=j.student.slug %}" target="_blank" rel="noopener noreferrer">View Profile</a>
                 </div>
                 <span class="d-block">@{{j.stu_vote|intcomma}} {% ifequal j.stu_vote 1 %}Vote{% else %}Votes{% endifequal %}</span>
             </div>
