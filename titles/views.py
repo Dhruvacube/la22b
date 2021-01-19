@@ -14,7 +14,7 @@ title_vote_limit = lambda: Settings.objects.values('title_limit').get_or_create(
 
 # Create your views here.
 def title_entry(request):
-    title_model = Titles.objects.values('title_name','slug','total_vote','desc').order_by('total_vote').all().reverse()
+    title_model = Titles.objects.values('title_name','slug','total_vote','desc').all()
     
     return render(
         request,
