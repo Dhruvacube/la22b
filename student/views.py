@@ -25,6 +25,7 @@ def photo(class_stu):
 
 #Student entry View
 def entry(request):
+    from itertools import chain
     classes = Student.objects.values('class_stu').distinct('class_stu')
     return render(
         request,
@@ -32,7 +33,7 @@ def entry(request):
         {
             'total_students': total_students,
             'image': 'class/sc_1.jpeg',
-            'classes': classes,
+            'classes': list(chain(classes[1:],classes[0:1])),
             'bell': date_start_end_else(),
         }
     )
