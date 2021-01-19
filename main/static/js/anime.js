@@ -1,16 +1,16 @@
 function addclassfnc(x) {
     if (x.matches) { // If media query matches
-        $('.bx').addClass("bxs-down-arrow-alt");
-        $('.bx').removeClass("bxs-right-arrow-alt");
-        $('.bx').removeClass("bx-fade-left");
+        $('#arrowbx').addClass("bxs-down-arrow-alt");
+        $('#arrowbx').removeClass("bxs-right-arrow-alt");
+        $('#arrowbx').removeClass("bx-fade-left");
         $('#mt-5').removeClass("mt-5");
-        $('.bx').addClass("bx-fade-down");
+        $('#arrowbx').addClass("bx-fade-down");
     } else {
-        $('.bx').removeClass("bxs-down-arrow-alt");
-        $('.bx').removeClass("bx-fade-down");
-        $('.bx').addClass("bxs-right-arrow-alt");
+        $('#arrowbx').removeClass("bxs-down-arrow-alt");
+        $('#arrowbx').removeClass("bx-fade-down");
+        $('#arrowbx').addClass("bxs-right-arrow-alt");
         $('#mt-5').addClass("mt-5");
-        $('.bx').addClass("bx-fade-left");
+        $('#arrowbx').addClass("bx-fade-left");
     }
 }
 
@@ -20,11 +20,11 @@ x.addListener(addclassfnc) // Attach listener function on state changes
 
 jQuery(document).ready(function($) {
     if (x.matches) { // If media query matches
-        $('.bx').addClass("bxs-down-arrow-alt");
-        $('.bx').addClass("bx-fade-down");
+        $('#arrowbx').addClass("bxs-down-arrow-alt");
+        $('#arrowbx').addClass("bx-fade-down");
     } else {
         $('.bx').addClass("bxs-right-arrow-alt");
         $('#mt-5').addClass("mt-5");
-        $('.bx').addClass("bx-fade-left");
+        $('#arrowbx').addClass("bx-fade-left");
     }
 });
