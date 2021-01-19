@@ -139,7 +139,7 @@ def addnicknames(request, slug):
 
             Student.objects.filter(slug=slug).update(data=data_list)
             messages.success(request, "The Nickname has succesfully added!")
-            return redirect(reverse('Student Profile',args=[slug]))
+            return redirect(reverse('Student Profile',args=[Student.objects.filter(slug=slug).values('class_stu').get()['class_stu'] ,slug]))
     else: 
         return redirect(reverse('Student Entry Page'))
 
