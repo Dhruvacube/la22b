@@ -23,7 +23,7 @@ jQuery(document).ready(function($) {
         $('#arrowbx').addClass("bxs-down-arrow-alt");
         $('#arrowbx').addClass("bx-fade-down");
     } else {
-        $('.bx').addClass("bxs-right-arrow-alt");
+        $('#arrowbx').addClass("bxs-right-arrow-alt");
         $('#mt-5').addClass("mt-5");
         $('#arrowbx').addClass("bx-fade-left");
     }
