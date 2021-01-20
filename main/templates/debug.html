@@ -1,1 +1,2 @@
-{% filter force_escape %} {% debug %} {% endfilter %}
+{% extends 'layout.html' %}{% load static %}{% block body %}
+<pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre> {% endblock %}
