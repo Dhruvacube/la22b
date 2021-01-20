@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Application definition
 
 INSTALLED_APPS = [
-    'main.apps.MainConfig',            
+    'main.apps.MainConfig',
     'results.apps.ResultsConfig',
     'student.apps.StudentConfig',
     'titles.apps.TitlesConfig',
@@ -61,7 +61,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'la22b.wsgi.application'
-DUMMY_PRODUCTION = ast.literal_eval(os.environ.get('DUMMY_PRODUCTION', 'False'))
+DUMMY_PRODUCTION = ast.literal_eval(
+    os.environ.get('DUMMY_PRODUCTION', 'False'))
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -74,19 +75,23 @@ if os.path.isfile(dotenv_file):
     ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
     DEBUG = True
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
-    DATABASES = {'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))}
-    GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = BASE_DIR /'gdrive_config.json'
+    DATABASES = {'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'))}
+    GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = BASE_DIR / 'gdrive_config.json'
 
 else:
     PRODUCTION_SERVER = True
     DEBUG = False
-    ALLOWED_HOSTS =['*']
+    ALLOWED_HOSTS = ['*']
     GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = None
-    DATABASES = {'default': dj_database_url.config(default=os.environ['DATABASE_URL'])}
+    DATABASES = {'default': dj_database_url.config(
+        default=os.environ['DATABASE_URL'])}
     SECRET_KEY = os.environ['SECRET_KEY']
 
-    MIDDLEWARE = [MIDDLEWARE[0]]+['whitenoise.middleware.WhiteNoiseMiddleware']+MIDDLEWARE[1:]
-    INSTALLED_APPS=INSTALLED_APPS[0:-1]+['whitenoise.runserver_nostatic','gdstorage']+[INSTALLED_APPS[-1]]
+    MIDDLEWARE = [MIDDLEWARE[0]] + \
+        ['whitenoise.middleware.WhiteNoiseMiddleware']+MIDDLEWARE[1:]
+    INSTALLED_APPS = INSTALLED_APPS[0:-1] + \
+        ['whitenoise.runserver_nostatic', 'gdstorage']+[INSTALLED_APPS[-1]]
 
 
 # Password validation
@@ -132,9 +137,9 @@ MEDIA_URL = '/media/'
 
 SESSION_COOKIE_AGE = 86400
 
-#oververiding a message tag
+# oververiding a message tag
 MESSAGE_TAGS = {
-    messages.ERROR : 'danger'
+    messages.ERROR: 'danger'
 }
 
 # # Deployment check
@@ -153,12 +158,13 @@ EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 EMAIL_PORT = os.environ['EMAIL_PORT']
 EMAIL_USE_SSL = os.environ['EMAIL_USE_SSL']
 EMAIL_BACKEND = 'post_office.EmailBackend'
-DEFAULT_FROM_EMAIL  = os.environ['DEFAULT_FROM_EMAIL']
+DEFAULT_FROM_EMAIL = os.environ['DEFAULT_FROM_EMAIL']
 
-ADMINS = [('admin', EMAIL_HOST_USER),]
+ADMINS = [('admin', EMAIL_HOST_USER), ]
 
 if DUMMY_PRODUCTION:
-    INSTALLED_APPS=INSTALLED_APPS[0:-1]+['gdstorage',]+[INSTALLED_APPS[-1]]
+    INSTALLED_APPS = INSTALLED_APPS[0:-1]+['gdstorage', ]+[INSTALLED_APPS[-1]]
 else:
     MEDIA_ROOT = BASE_DIR / 'media'
-    if not os.path.exists(MEDIA_ROOT): os.mkdir(MEDIA_ROOT)
+    if not os.path.exists(MEDIA_ROOT):
+        os.mkdir(MEDIA_ROOT)

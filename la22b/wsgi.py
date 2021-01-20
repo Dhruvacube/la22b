@@ -24,11 +24,11 @@ try:
         """Send queued mail every 10 seconds"""
         call_command('send_queued_mail', processes=1)
         call_command('remove_stale_queries')
-    
+
     @uwsgidecorators.timer(10)
     def remove_stale_queries(num):
         call_command('remove_stale_queries')
-    
+
     @uwsgidecorators.timer(86400)
     def hide_students(num):
         call_command('hide_students')

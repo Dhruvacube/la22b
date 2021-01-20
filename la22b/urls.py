@@ -7,8 +7,10 @@ from main import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
+
     path('', views.home, name="Cover Page"),
+
+    path('debug/', views.debug_info, name="Debug Info"),
 
     path('important_message/', views.message_vote, name="Important Message"),
 
@@ -20,15 +22,18 @@ urlpatterns = [
     path('confession_store/', views.confession_store, name="Confession Store"),
 
     path('partner-finder/', views.partner, name="Partner Finder"),
-    path('partner-finder-result/', views.partner_result, name="Partner Finder Result"),
+    path('partner-finder-result/', views.partner_result,
+         name="Partner Finder Result"),
 
-    path('anime-characters-are-you/', views.animeChar, name="Which Anime Character are you?"),
-    path('anime-characters-are-you-result/', views.animeCharResult, name="Which Anime Character are you Results"),
-    
-    path('results/',include('results.urls')),
-    path('student/',include('student.urls')),
-    path('titles/',include('titles.urls')),
-    path('results/',include('results.urls')),
+    path('anime-characters-are-you/', views.animeChar,
+         name="Which Anime Character are you?"),
+    path('anime-characters-are-you-result/', views.animeCharResult,
+         name="Which Anime Character are you Results"),
+
+    path('results/', include('results.urls')),
+    path('student/', include('student.urls')),
+    path('titles/', include('titles.urls')),
+    path('results/', include('results.urls')),
 
     url(r'^logout/$', views.user_logout, name='signout'),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
