@@ -55,7 +55,7 @@ def search(request):
     if request.method == 'GET':
         query = formattedNickname(request.GET['query'])
         if len(query)>350:
-            stu_list = Student.onjects.none()
+            stu_list = Student.objects.none()
             messages.warning(request, "Please limit your query to 350 characters or less only!")
 
         stuName = Student.objects.filter(name__icontains=query.strip(' '),hidden=False)
