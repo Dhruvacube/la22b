@@ -69,7 +69,6 @@ def search(request):
             {
                 'total_students': total_students,
                 'student_model': stu_list,
-                'bell': date_start_end_else(),
             }
         )
     else:
