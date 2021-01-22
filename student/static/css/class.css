@@ -26,8 +26,14 @@ body {
         background-repeat: no-repeat;
         background-position: center;
     }
-    40% {
+    20% {
         background: url('../class/sc_1.jpeg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    30% {
+        background: url('../class/arts.jpeg');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
