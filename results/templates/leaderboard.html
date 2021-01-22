@@ -1,4 +1,4 @@
-{% extends 'layout.html' %} {% load static %}{% load humanize %}{% load extras %}{% block body %}
+{% extends 'layout.html' %} {% load static %}{% load humanize %}{% load votes %}{% block body %}
 <style>
     body {
         background-image: url('{% static "/img/3.jpeg" %}');
@@ -15,29 +15,28 @@
         </div>
     </div>
 
-    {% for i in titles_model %} {% with n=0 %}{% ifequal i.total_vote 0 %}{% else %}
+    {% for i in titles_model %}{% ifequal i.total_vote 0 %}{% else %}
     <div class="my-3 p-3 bg-white rounded shadow-sm">
         <h6 class="border-bottom pb-2 mb-0">Top 10 : <u style="color:{{i.colour}};">{{i.title_name}}</u></h6>
-
-        {% for j in participants_model %}{% ifequal n 10 %}{% increment n %}{% else %}{% ifequal j.title_part.title_name i.title_name %}{% increment n %}
+        {% with vote_winner=i.id|win_vote %} {% for j in participants_model %}{% ifequal j.title_part.title_name i.title_name %}
         <div class="d-flex text-muted pt-3">
             <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="40" height="30" src="{{j.student.profile_pic.url}}">
 
             <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                 <div class="d-flex justify-content-between">
-                    <strong class="text-gray-dark" style="color:{{i.colour}};">{{j.student.name}}</strong>
+                    <strong class="text-gray-dark" style="color:{{i.colour}};">{{j.student.name}} {% ifequal vote_winner j.stu_vote  %}<i class='bx bxs-star' style='color:#ffbe00'></i>{% endifequal %}</strong>
                     <a href="{% url 'Student Profile' class_stu=j.student.class_stu slug=j.student.slug %}" target="_blank" rel="noopener noreferrer">View Profile</a>
                 </div>
-                <span class="d-block">@{{j.stu_vote|intcomma}} {% ifequal j.stu_vote 1 %}Vote{% else %}Votes{% endifequal %}</span>
+                <span class="d-block">@{{j.stu_vote|intcomma}} Vote{{j.stu_vote|pluralize}}</span>
             </div>
         </div>
-        {% endifequal %}{% endifequal %}{% endfor %}
+        {% endifequal %}{% endfor %}{% endwith %}
 
         <small class="d-block text-end mt-3">
             <a href="{% url 'Leaderboard Each' slug=i.slug %}" class="btn btn-outline-primary">View More...</a>
         </small>
     </div>
-    {% endifequal %} {% endwith %}{% endfor %}
+    {% endifequal %} {% endfor %}
 
 </main>
 {% endblock %}

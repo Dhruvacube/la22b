@@ -1,4 +1,4 @@
-{% extends 'layout.html' %} {% load static %}{% load humanize %}{% block body %}
+{% extends 'layout.html' %} {% load static %}{% load humanize %}{% load votes %}{% block body %}
 <style>
     body {
         background-image: url('{% static "/img/3.jpeg" %}');
@@ -22,19 +22,18 @@
     </script>{% else %}
 
     <div class="my-3 p-3 bg-white rounded shadow-sm">
-
-        {% for j in participants_model %}
+        {% with vote_winner=titles_model.id|win_vote %} {% for j in participants_model %}
         <div class="d-flex text-muted pt-3">
             <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="40" height="30" src="{{j.student.profile_pic.url}}">
 
             <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                 <div class="d-flex justify-content-between">
-                    <strong class="text-gray-dark">{{j.student.name}}</strong>
+                    <strong class="text-gray-dark">{{j.student.name}} {% ifequal vote_winner j.stu_vote  %}<i class='bx bxs-star' style='color:#ffbe00'></i>{% endifequal %}</strong>
                 </div>
-                <span class="d-block">@{{j.stu_vote}} {% ifequal j.stu_vote 1 %}Vote{% else %}Votes{% endifequal %}</span>
+                <span class="d-block">@{{j.stu_vote}} Vote{{j.stu_vote|pluralize}}</span>
             </div>
         </div>
-        {% endfor %}
+        {% endfor %} {% endwith %}
 
     </div>
     {% endifequal %}

@@ -1,10 +1,10 @@
+from django.contrib import messages
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from student.templatetags import extras
 from student.views import total_students
 from titles.models import *
-from django.contrib import messages
+from .templatetags import votes
 
 
 # Create your views here.

@@ -21,7 +21,7 @@ class Settings(models.Model):
     vote_nicknameassigntime_start = models.DateTimeField(
         _('Start Time limit of assigning votes and nickname'), default=timezone.now)
     vote_nicknameassigntime = models.DateTimeField(
-        _('End Time limit of assigning votes and nickname'), default=timezone.now()+timedelta(days=14))
+        _('End Time limit of assigning votes and nickname'), default=timezone.now)
 
     def __str__(self):
         return 'Settings'
