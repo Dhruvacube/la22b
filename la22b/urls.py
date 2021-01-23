@@ -29,6 +29,11 @@ urlpatterns = [
          name="Which Anime Character are you?"),
     path('anime-characters-are-you-result/', views.animeCharResult,
          name="Which Anime Character are you Results"),
+     
+     path('waifu-husbando/', views.waifu_husbando,
+         name="Waifu Husbando"),
+    path('waifu-husbando-result/', views.waifu_husbando_result,
+         name="Waifu Husbando Results"),
 
     path('results/', include('results.urls')),
     path('student/', include('student.urls')),

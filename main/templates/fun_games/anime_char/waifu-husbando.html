@@ -1,6 +1,5 @@
 {% extends 'layout.html' %}{% load static %}{% block body %}
 <link href="{% static 'css/student.css' %}" rel="stylesheet">
-<script src="{% static 'js/anime.js' %}"></script>
 <script>
     //Checking loader js in jquery
     var timeoutset;
@@ -24,25 +23,25 @@
 </div>
 
 <!-- Results -->
-<div id="result" class="container emp-profile invisible" style="height: auto; min-height:0; margin-top: 5%;">
+<div id="result" class="container emp-profile invisible border border-danger" style="height: auto; min-height:0; margin-top: 5%;">
     <div class="row g-2 text-center mb-2 border border-primary rounded">
-        <h3><strong class="text-primary">{{student_model.name}}</strong> you are <strong class="text-success">{{anime_char_name}}</strong></h3>
+        <h4><strong class="text-primary">{{student_model.name}}</strong> your {{message_waifu}} maybe <strong class="text-success">{{anime_char_name}}</strong></h4>
     </div>
     <div class="row g-2">
         <!-- Profile Photo -->
         <div class="col-md-4">
             <div class="profile-img">
                 <img src="{{student_model.profile_pic.url}}" alt="Photo of {{student_model.name}}" style="border-radius: 5%; width: 100%; height: 200px;" />
-                <strong><span>{{student_model.name}}</span></strong>
+                <strong><span>{{student_model.name}} · {{student_model.class_stu}}</span></strong>
             </div>
         </div>
-        <div id="mt-5" class="col-md-4 text-center" style="font-size: 100px;"><i id="arrowbx" class='bx'></i>
-            <h5 class="ml-5 mb-3"><strong class="text-primary">{{traits}}%</strong> character traits of <strong class="text-success">{{anime_char_name}}</strong> matching in you</h5>
+        <div id="mt-5" class="col-md-4 text-center text-danger" style="font-size: 100px;"><i class='bx bxs-heart bx-burst text-danger'></i>
+            <h3>{{random_love_percentage}}%</h3>
         </div>
 
         <div class="col-md-4 text-center">
             <div class="profile-img">
-                <img src="{% static random_anime_char %}" alt="Photo of {{anime_char_name}}" style="border-radius: 5%; width: 60%; height: 200px;" />
+                <img src="{% static random_anime_char %}" alt="Photo of {{anime_char_name}}" style="border-radius: 5%; width: 100%; height: 300px;" />
                 <br/><strong><span>{{anime_char_name}}</span></strong>
             </div>
         </div>

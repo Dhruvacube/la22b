@@ -96,6 +96,50 @@ def home(request):
     )
 
 
+def waifu_husbando(request):
+    return render(
+        request,
+        'fun_games/anime_char/anime-char.html',
+        {
+            'total_students': total_students,
+            'student_objects': Student.objects.values('name', 'slug', 'class_stu').all(),
+            'randomAnimeChar': randomAnimeChar(),
+            'backgroundAnime': randomAnimeChar(),
+            'msg_context': 'Find your Waifu / Husbando !',
+            'btn_name': 'Find',
+            'form_submit_url': reverse('Waifu Husbando Results'),
+        }
+    )
+
+
+def waifu_husbando_result(request):
+    if request.method == "POST":
+        slug = request.POST['name']
+        if slug == 'Select Your Name':
+            messages.error(request, "Please select your name from the list !")
+            return redirect(reverse('Waifu Husbando'))
+
+        student_obj = get_object_or_404(Student, slug=slug)
+        random_anime_char = randomAnimeChar(
+            namelist=('m' if student_obj.gender == 'f' else 'f', student_obj.name))
+        return render(
+            request,
+            'fun_games/anime_char/waifu-husbando.html',
+            {
+                'student_model': student_obj,
+                'random_anime_char': random_anime_char,
+                'backgroundAnime': randomAnimeChar(),
+                'anime_char_name': returnAnimeName(random_anime_char),
+                'total_students': total_students,
+                'random_love_percentage': random.randint(40, 100),
+                'message_conxt': 'Checking',
+                'message_waifu': 'Husbando' if student_obj.gender == 'f' else 'Waifu'
+            }
+        )
+    else:
+        return redirect(reverse('Waifu Husbando'))
+
+
 def faq(request):
     form = ContactForm()
     remove_form = RemoveProfileForm()
@@ -325,6 +369,7 @@ def animeCharResult(request):
                 'backgroundAnime': randomAnimeChar(),
                 'anime_char_name': returnAnimeName(random_anime_char),
                 'total_students': total_students,
+                'traits': random.randint(30, 100),
                 'message_conxt': 'Checking',
             }
         )
