@@ -117,7 +117,8 @@ class TitlesAdmin(admin.ModelAdmin):
 
 
 class ParticipantAdmin(admin.ModelAdmin):
-    search_fields = list_display = list_filter = ('student', 'title_part')
+    search_fields = list_display = ('student', 'title')
+    list_filter = ('title',)
     list_per_page = 20
 
     fieldsets = (
